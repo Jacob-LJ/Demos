@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ADM-kV-2Qe">
+                                <rect key="frame" x="38.5" y="318.5" width="297" height="30"/>
+                                <state key="normal" title="方式二、OpenUrl 的 scheme &gt; itms-apps://"/>
+                                <connections>
+                                    <action selector="secondClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eot-hg-A4m"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lAq-FO-Ycx">
+                                <rect key="frame" x="51.5" y="258.5" width="272" height="30"/>
+                                <state key="normal" title="方式一、SKStoreProductViewController"/>
+                                <connections>
+                                    <action selector="fistClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yAy-G3-hCD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FwB-hA-y12">
+                                <rect key="frame" x="55.5" y="378.5" width="263" height="30"/>
+                                <state key="normal" title="方式三、OpenUrl 的 scheme &gt; https://"/>
+                                <connections>
+                                    <action selector="thirdClick:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vdZ-xz-DAw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="FwB-hA-y12" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0Me-aY-YPi"/>
+                            <constraint firstItem="FwB-hA-y12" firstAttribute="top" secondItem="ADM-kV-2Qe" secondAttribute="bottom" constant="30" id="3lc-NV-DIc"/>
+                            <constraint firstItem="ADM-kV-2Qe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="HGt-Qf-5rJ"/>
+                            <constraint firstItem="ADM-kV-2Qe" firstAttribute="top" secondItem="lAq-FO-Ycx" secondAttribute="bottom" constant="30" id="LOZ-Qp-M9F"/>
+                            <constraint firstItem="ADM-kV-2Qe" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="azT-RU-3jJ"/>
+                            <constraint firstItem="lAq-FO-Ycx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cGd-2B-g3g"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+</document>
