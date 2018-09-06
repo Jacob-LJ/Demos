@@ -13,6 +13,7 @@
 		16B733ED2141026500A563AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16B733EC2141026500A563AE /* Assets.xcassets */; };
 		16B733F02141026500A563AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16B733EE2141026500A563AE /* LaunchScreen.storyboard */; };
 		16B733F32141026500A563AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B733F22141026500A563AE /* main.m */; };
+		16B7340521410D5200A563AE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 16B7340321410D5200A563AE /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,15 @@
 		16B733EF2141026500A563AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		16B733F12141026500A563AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16B733F22141026500A563AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		16B733F9214109D600A563AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		16B733FA214109D600A563AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		16B733FB214109E000A563AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		16B733FC214109E000A563AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		16B7340021410BA300A563AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		16B7340221410BA700A563AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		16B7340421410D5200A563AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		16B7340621410D5E00A563AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		16B7340721410D6700A563AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +72,7 @@
 				16B733E42141026500A563AE /* AppDelegate.m */,
 				16B733E62141026500A563AE /* ViewController.h */,
 				16B733E72141026500A563AE /* ViewController.m */,
+				16B7340321410D5200A563AE /* Localizable.strings */,
 				16B733E92141026500A563AE /* Main.storyboard */,
 				16B733EC2141026500A563AE /* Assets.xcassets */,
 				16B733EE2141026500A563AE /* LaunchScreen.storyboard */,
@@ -113,6 +124,8 @@
 			knownRegions = (
 				en,
 				Base,
+				ja,
+				"zh-Hans",
 			);
 			mainGroup = 16B733D72141026500A563AE;
 			productRefGroup = 16B733E12141026500A563AE /* Products */;
@@ -130,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16B733F02141026500A563AE /* LaunchScreen.storyboard in Resources */,
+				16B7340521410D5200A563AE /* Localizable.strings in Resources */,
 				16B733ED2141026500A563AE /* Assets.xcassets in Resources */,
 				16B733EB2141026500A563AE /* Main.storyboard in Resources */,
 			);
@@ -155,6 +169,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				16B733EA2141026500A563AE /* Base */,
+				16B733F9214109D600A563AE /* ja */,
+				16B733FB214109E000A563AE /* zh-Hans */,
+				16B7340021410BA300A563AE /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -163,8 +180,21 @@
 			isa = PBXVariantGroup;
 			children = (
 				16B733EF2141026500A563AE /* Base */,
+				16B733FA214109D600A563AE /* ja */,
+				16B733FC214109E000A563AE /* zh-Hans */,
+				16B7340221410BA700A563AE /* en */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		16B7340321410D5200A563AE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16B7340421410D5200A563AE /* en */,
+				16B7340621410D5E00A563AE /* ja */,
+				16B7340721410D6700A563AE /* zh-Hans */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -174,6 +204,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -229,6 +260,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
