@@ -1,0 +1,9 @@
+/* 
+  InfoPlist.strings
+  LanguageLocalizationDemo
+
+  Created by Jacob on 2018/9/4.
+  Copyright © 2018年 Jacob. All rights reserved.
+*/
+
+CFBundleDisplayName = "繁体Demo";

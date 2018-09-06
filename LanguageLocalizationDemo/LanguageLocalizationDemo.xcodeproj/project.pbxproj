@@ -1,0 +1,496 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1630F326213E5DD30080FB66 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1630F325213E5DD30080FB66 /* AppDelegate.m */; };
+		1630F329213E5DD30080FB66 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1630F328213E5DD30080FB66 /* ViewController.m */; };
+		1630F32C213E5DD30080FB66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1630F32A213E5DD30080FB66 /* Main.storyboard */; };
+		1630F32E213E5DE40080FB66 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1630F32D213E5DE40080FB66 /* Assets.xcassets */; };
+		1630F331213E5DE40080FB66 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1630F32F213E5DE40080FB66 /* LaunchScreen.storyboard */; };
+		1630F334213E5DE40080FB66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1630F333213E5DE40080FB66 /* main.m */; };
+		1630F34C213E67920080FB66 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1630F34E213E67920080FB66 /* InfoPlist.strings */; };
+		16B733A3213F88D500A563AE /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 16B733A5213F88D500A563AE /* Localizable.strings */; };
+		16B733AD213FBE5700A563AE /* Module1.strings in Resources */ = {isa = PBXBuildFile; fileRef = 16B733AF213FBE5700A563AE /* Module1.strings */; };
+		16B733B6213FD09200A563AE /* langueIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 16B733B8213FD09200A563AE /* langueIcon.png */; };
+		16B733C1213FD66D00A563AE /* XibController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B733BF213FD66D00A563AE /* XibController.m */; };
+		16B733C3213FD84F00A563AE /* XibController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 16B733C5213FD84F00A563AE /* XibController.xib */; };
+		16B733D22140D76900A563AE /* AutoGenStrings.py in Resources */ = {isa = PBXBuildFile; fileRef = 16B733D12140D76900A563AE /* AutoGenStrings.py */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1630F321213E5DD30080FB66 /* LanguageLocalizationDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LanguageLocalizationDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1630F324213E5DD30080FB66 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1630F325213E5DD30080FB66 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1630F327213E5DD30080FB66 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1630F328213E5DD30080FB66 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1630F32B213E5DD30080FB66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1630F32D213E5DE40080FB66 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1630F330213E5DE40080FB66 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		1630F332213E5DE40080FB66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1630F333213E5DE40080FB66 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1630F33A213E605A0080FB66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		1630F33B213E605A0080FB66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		1630F33C213E60600080FB66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		1630F33D213E60600080FB66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		1630F33E213E606A0080FB66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Main.strings"; sourceTree = "<group>"; };
+		1630F33F213E606B0080FB66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		1630F340213E60700080FB66 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		1630F341213E60700080FB66 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		1630F34D213E67920080FB66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1630F34F213E67ED0080FB66 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		1630F350213E67EE0080FB66 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1630F351213E67EF0080FB66 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		1630F352213E67F10080FB66 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		16B733A4213F88D500A563AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		16B733A6213F88D900A563AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		16B733A7213F88DB00A563AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		16B733A8213F88DC00A563AE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		16B733A9213F88DD00A563AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		16B733AE213FBE5700A563AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Module1.strings; sourceTree = "<group>"; };
+		16B733B0213FBE5A00A563AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Module1.strings"; sourceTree = "<group>"; };
+		16B733B1213FBE5B00A563AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Module1.strings; sourceTree = "<group>"; };
+		16B733B2213FBE5C00A563AE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Module1.strings"; sourceTree = "<group>"; };
+		16B733B3213FBE5E00A563AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Module1.strings; sourceTree = "<group>"; };
+		16B733B7213FD09200A563AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Base; path = Base.lproj/langueIcon.png; sourceTree = "<group>"; };
+		16B733B9213FD09500A563AE /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/langueIcon.png; sourceTree = "<group>"; };
+		16B733BA213FD09700A563AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/langueIcon.png"; sourceTree = "<group>"; };
+		16B733BB213FD09800A563AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ja; path = ja.lproj/langueIcon.png; sourceTree = "<group>"; };
+		16B733BC213FD09900A563AE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hant"; path = "zh-Hant.lproj/langueIcon.png"; sourceTree = "<group>"; };
+		16B733BD213FD09A00A563AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fr; path = fr.lproj/langueIcon.png; sourceTree = "<group>"; };
+		16B733BE213FD66D00A563AE /* XibController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XibController.h; sourceTree = "<group>"; };
+		16B733BF213FD66D00A563AE /* XibController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XibController.m; sourceTree = "<group>"; };
+		16B733C4213FD84F00A563AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/XibController.xib; sourceTree = "<group>"; };
+		16B733C7213FD85600A563AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/XibController.strings; sourceTree = "<group>"; };
+		16B733C9213FD85900A563AE /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/XibController.strings"; sourceTree = "<group>"; };
+		16B733CB213FD85A00A563AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/XibController.strings; sourceTree = "<group>"; };
+		16B733CD213FD85B00A563AE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/XibController.strings"; sourceTree = "<group>"; };
+		16B733CF213FD85D00A563AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/XibController.strings; sourceTree = "<group>"; };
+		16B733D12140D76900A563AE /* AutoGenStrings.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = AutoGenStrings.py; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1630F31E213E5DD30080FB66 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1630F318213E5DD30080FB66 = {
+			isa = PBXGroup;
+			children = (
+				1630F323213E5DD30080FB66 /* LanguageLocalizationDemo */,
+				1630F322213E5DD30080FB66 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1630F322213E5DD30080FB66 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1630F321213E5DD30080FB66 /* LanguageLocalizationDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1630F323213E5DD30080FB66 /* LanguageLocalizationDemo */ = {
+			isa = PBXGroup;
+			children = (
+				16B733D02140D76900A563AE /* RunScript */,
+				1630F324213E5DD30080FB66 /* AppDelegate.h */,
+				1630F325213E5DD30080FB66 /* AppDelegate.m */,
+				1630F327213E5DD30080FB66 /* ViewController.h */,
+				1630F328213E5DD30080FB66 /* ViewController.m */,
+				16B733B8213FD09200A563AE /* langueIcon.png */,
+				1630F32A213E5DD30080FB66 /* Main.storyboard */,
+				1630F32D213E5DE40080FB66 /* Assets.xcassets */,
+				1630F32F213E5DE40080FB66 /* LaunchScreen.storyboard */,
+				1630F332213E5DE40080FB66 /* Info.plist */,
+				1630F34E213E67920080FB66 /* InfoPlist.strings */,
+				1630F333213E5DE40080FB66 /* main.m */,
+				16B733A5213F88D500A563AE /* Localizable.strings */,
+				16B733AF213FBE5700A563AE /* Module1.strings */,
+				16B733BE213FD66D00A563AE /* XibController.h */,
+				16B733BF213FD66D00A563AE /* XibController.m */,
+				16B733C5213FD84F00A563AE /* XibController.xib */,
+			);
+			path = LanguageLocalizationDemo;
+			sourceTree = "<group>";
+		};
+		16B733D02140D76900A563AE /* RunScript */ = {
+			isa = PBXGroup;
+			children = (
+				16B733D12140D76900A563AE /* AutoGenStrings.py */,
+			);
+			path = RunScript;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1630F320213E5DD30080FB66 /* LanguageLocalizationDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1630F337213E5DE40080FB66 /* Build configuration list for PBXNativeTarget "LanguageLocalizationDemo" */;
+			buildPhases = (
+				1630F31D213E5DD30080FB66 /* Sources */,
+				1630F31E213E5DD30080FB66 /* Frameworks */,
+				1630F31F213E5DD30080FB66 /* Resources */,
+				16B733D32140D7A800A563AE /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LanguageLocalizationDemo;
+			productName = LanguageLocalizationDemo;
+			productReference = 1630F321213E5DD30080FB66 /* LanguageLocalizationDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1630F319213E5DD30080FB66 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = Jacob;
+				TargetAttributes = {
+					1630F320213E5DD30080FB66 = {
+						CreatedOnToolsVersion = 9.4.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 1630F31C213E5DD30080FB66 /* Build configuration list for PBXProject "LanguageLocalizationDemo" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				"zh-Hans",
+				ja,
+				"zh-Hant",
+				fr,
+			);
+			mainGroup = 1630F318213E5DD30080FB66;
+			productRefGroup = 1630F322213E5DD30080FB66 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1630F320213E5DD30080FB66 /* LanguageLocalizationDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1630F31F213E5DD30080FB66 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16B733B6213FD09200A563AE /* langueIcon.png in Resources */,
+				16B733C3213FD84F00A563AE /* XibController.xib in Resources */,
+				16B733A3213F88D500A563AE /* Localizable.strings in Resources */,
+				16B733D22140D76900A563AE /* AutoGenStrings.py in Resources */,
+				1630F331213E5DE40080FB66 /* LaunchScreen.storyboard in Resources */,
+				16B733AD213FBE5700A563AE /* Module1.strings in Resources */,
+				1630F34C213E67920080FB66 /* InfoPlist.strings in Resources */,
+				1630F32E213E5DE40080FB66 /* Assets.xcassets in Resources */,
+				1630F32C213E5DD30080FB66 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		16B733D32140D7A800A563AE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\npython ${SRCROOT}/${TARGET_NAME}/RunScript/AutoGenStrings.py ${SRCROOT}/${TARGET_NAME}";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1630F31D213E5DD30080FB66 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1630F329213E5DD30080FB66 /* ViewController.m in Sources */,
+				16B733C1213FD66D00A563AE /* XibController.m in Sources */,
+				1630F334213E5DE40080FB66 /* main.m in Sources */,
+				1630F326213E5DD30080FB66 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		1630F32A213E5DD30080FB66 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1630F32B213E5DD30080FB66 /* Base */,
+				1630F33A213E605A0080FB66 /* ja */,
+				1630F33C213E60600080FB66 /* zh-Hans */,
+				1630F33E213E606A0080FB66 /* zh-Hant */,
+				1630F340213E60700080FB66 /* fr */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1630F32F213E5DE40080FB66 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1630F330213E5DE40080FB66 /* Base */,
+				1630F33B213E605A0080FB66 /* ja */,
+				1630F33D213E60600080FB66 /* zh-Hans */,
+				1630F33F213E606B0080FB66 /* zh-Hant */,
+				1630F341213E60700080FB66 /* fr */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		1630F34E213E67920080FB66 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1630F34D213E67920080FB66 /* en */,
+				1630F34F213E67ED0080FB66 /* zh-Hans */,
+				1630F350213E67EE0080FB66 /* ja */,
+				1630F351213E67EF0080FB66 /* zh-Hant */,
+				1630F352213E67F10080FB66 /* fr */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		16B733A5213F88D500A563AE /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16B733A4213F88D500A563AE /* en */,
+				16B733A6213F88D900A563AE /* zh-Hans */,
+				16B733A7213F88DB00A563AE /* ja */,
+				16B733A8213F88DC00A563AE /* zh-Hant */,
+				16B733A9213F88DD00A563AE /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		16B733AF213FBE5700A563AE /* Module1.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16B733AE213FBE5700A563AE /* en */,
+				16B733B0213FBE5A00A563AE /* zh-Hans */,
+				16B733B1213FBE5B00A563AE /* ja */,
+				16B733B2213FBE5C00A563AE /* zh-Hant */,
+				16B733B3213FBE5E00A563AE /* fr */,
+			);
+			name = Module1.strings;
+			sourceTree = "<group>";
+		};
+		16B733B8213FD09200A563AE /* langueIcon.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16B733B7213FD09200A563AE /* Base */,
+				16B733B9213FD09500A563AE /* en */,
+				16B733BA213FD09700A563AE /* zh-Hans */,
+				16B733BB213FD09800A563AE /* ja */,
+				16B733BC213FD09900A563AE /* zh-Hant */,
+				16B733BD213FD09A00A563AE /* fr */,
+			);
+			name = langueIcon.png;
+			sourceTree = "<group>";
+		};
+		16B733C5213FD84F00A563AE /* XibController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16B733C4213FD84F00A563AE /* Base */,
+				16B733C7213FD85600A563AE /* en */,
+				16B733C9213FD85900A563AE /* zh-Hans */,
+				16B733CB213FD85A00A563AE /* ja */,
+				16B733CD213FD85B00A563AE /* zh-Hant */,
+				16B733CF213FD85D00A563AE /* fr */,
+			);
+			name = XibController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1630F335213E5DE40080FB66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1630F336213E5DE40080FB66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1630F338213E5DE40080FB66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3AM9U4HK7K;
+				INFOPLIST_FILE = LanguageLocalizationDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jacob.LanguageLocalizationDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		1630F339213E5DE40080FB66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3AM9U4HK7K;
+				INFOPLIST_FILE = LanguageLocalizationDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Jacob.LanguageLocalizationDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1630F31C213E5DD30080FB66 /* Build configuration list for PBXProject "LanguageLocalizationDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1630F335213E5DE40080FB66 /* Debug */,
+				1630F336213E5DE40080FB66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1630F337213E5DE40080FB66 /* Build configuration list for PBXNativeTarget "LanguageLocalizationDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1630F338213E5DE40080FB66 /* Debug */,
+				1630F339213E5DE40080FB66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1630F319213E5DD30080FB66 /* Project object */;
+}
