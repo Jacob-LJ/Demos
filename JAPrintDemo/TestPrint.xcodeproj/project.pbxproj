@@ -1,0 +1,522 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		161B2432214B946B003C11CE /* test5.docx in Resources */ = {isa = PBXBuildFile; fileRef = 161B2431214B946A003C11CE /* test5.docx */; };
+		161B2434214B957A003C11CE /* test6.doc in Resources */ = {isa = PBXBuildFile; fileRef = 161B2433214B957A003C11CE /* test6.doc */; };
+		161B2437214BB195003C11CE /* JAPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 161B2436214BB195003C11CE /* JAPrintPageRenderer.m */; };
+		16B7341621425E1600A563AE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7341521425E1600A563AE /* AppDelegate.m */; };
+		16B7341921425E1600A563AE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7341821425E1600A563AE /* ViewController.m */; };
+		16B7341C21425E1600A563AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16B7341A21425E1600A563AE /* Main.storyboard */; };
+		16B7341E21425E1600A563AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16B7341D21425E1600A563AE /* Assets.xcassets */; };
+		16B7342121425E1600A563AE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16B7341F21425E1600A563AE /* LaunchScreen.storyboard */; };
+		16B7342421425E1600A563AE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7342321425E1600A563AE /* main.m */; };
+		16B7342B2142696F00A563AE /* ceshi.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 16B7342A2142696F00A563AE /* ceshi.pdf */; };
+		16B7348C214619CA00A563AE /* VIP application form.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 16B7348B214619CA00A563AE /* VIP application form.pdf */; };
+		16B7DCCC214F4727007A95FC /* JAPrintNormal.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DCCB214F4727007A95FC /* JAPrintNormal.m */; };
+		16B7DD18214F5C22007A95FC /* NSBundle+TZImagePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DCFC214F5C21007A95FC /* NSBundle+TZImagePicker.m */; };
+		16B7DD19214F5C22007A95FC /* TZAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DCFE214F5C21007A95FC /* TZAssetCell.m */; };
+		16B7DD1A214F5C22007A95FC /* TZAssetModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD00214F5C21007A95FC /* TZAssetModel.m */; };
+		16B7DD1B214F5C22007A95FC /* TZGifPhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD02214F5C21007A95FC /* TZGifPhotoPreviewController.m */; };
+		16B7DD1C214F5C22007A95FC /* TZImageCropManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD04214F5C21007A95FC /* TZImageCropManager.m */; };
+		16B7DD1D214F5C22007A95FC /* TZImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD06214F5C21007A95FC /* TZImageManager.m */; };
+		16B7DD1E214F5C22007A95FC /* TZImagePickerController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 16B7DD07214F5C21007A95FC /* TZImagePickerController.bundle */; };
+		16B7DD1F214F5C22007A95FC /* TZImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD09214F5C21007A95FC /* TZImagePickerController.m */; };
+		16B7DD20214F5C22007A95FC /* TZLocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD0B214F5C21007A95FC /* TZLocationManager.m */; };
+		16B7DD21214F5C22007A95FC /* TZPhotoPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD0D214F5C21007A95FC /* TZPhotoPickerController.m */; };
+		16B7DD22214F5C22007A95FC /* TZPhotoPreviewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD0F214F5C21007A95FC /* TZPhotoPreviewCell.m */; };
+		16B7DD23214F5C22007A95FC /* TZPhotoPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD11214F5C21007A95FC /* TZPhotoPreviewController.m */; };
+		16B7DD24214F5C22007A95FC /* TZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD13214F5C21007A95FC /* TZProgressView.m */; };
+		16B7DD25214F5C22007A95FC /* TZVideoPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD15214F5C21007A95FC /* TZVideoPlayerController.m */; };
+		16B7DD26214F5C22007A95FC /* UIView+Layout.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD17214F5C21007A95FC /* UIView+Layout.m */; };
+		16B7DD2C214F821F007A95FC /* JAPrintBySelectController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD2B214F821F007A95FC /* JAPrintBySelectController.m */; };
+		16B7DD2F214F8605007A95FC /* JAPrintMutiTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD2E214F8605007A95FC /* JAPrintMutiTaskController.m */; };
+		16B7DD32214F8F75007A95FC /* JACell.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD31214F8F75007A95FC /* JACell.m */; };
+		16B7DD35214F926C007A95FC /* JADiffPrinterSyncAsyncPrintController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD34214F926C007A95FC /* JADiffPrinterSyncAsyncPrintController.m */; };
+		16B7DD38214F9F40007A95FC /* JAPrintMSFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD37214F9F40007A95FC /* JAPrintMSFileController.m */; };
+		16B7DD3B214F9F93007A95FC /* JAPrintWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD3A214F9F93007A95FC /* JAPrintWebController.m */; };
+		16B7DD3E214FACBB007A95FC /* JAMutiFormattersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD3D214FACBB007A95FC /* JAMutiFormattersController.m */; };
+		16DF40D2214A462E008F5B87 /* car.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 16DF40D1214A462D008F5B87 /* car.jpg */; };
+		16DF40D7214B65EE008F5B87 /* APLPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DF40D6214B65EE008F5B87 /* APLPrintPageRenderer.m */; };
+		16DF40DB214B903C008F5B87 /* testworld.docx in Resources */ = {isa = PBXBuildFile; fileRef = 16DF40DA214B903C008F5B87 /* testworld.docx */; };
+		16DF40DD214B904A008F5B87 /* testppt.pptx in Resources */ = {isa = PBXBuildFile; fileRef = 16DF40DC214B904A008F5B87 /* testppt.pptx */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		161B2431214B946A003C11CE /* test5.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = test5.docx; sourceTree = "<group>"; };
+		161B2433214B957A003C11CE /* test6.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = test6.doc; sourceTree = "<group>"; };
+		161B2435214BB195003C11CE /* JAPrintPageRenderer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPrintPageRenderer.h; sourceTree = "<group>"; };
+		161B2436214BB195003C11CE /* JAPrintPageRenderer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintPageRenderer.m; sourceTree = "<group>"; };
+		16B7341121425E1600A563AE /* TestPrint.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestPrint.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		16B7341421425E1600A563AE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		16B7341521425E1600A563AE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		16B7341721425E1600A563AE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		16B7341821425E1600A563AE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		16B7341B21425E1600A563AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		16B7341D21425E1600A563AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		16B7342021425E1600A563AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		16B7342221425E1600A563AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16B7342321425E1600A563AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		16B7342A2142696F00A563AE /* ceshi.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ceshi.pdf; sourceTree = "<group>"; };
+		16B7348B214619CA00A563AE /* VIP application form.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "VIP application form.pdf"; sourceTree = "<group>"; };
+		16B7DCCA214F4727007A95FC /* JAPrintNormal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPrintNormal.h; sourceTree = "<group>"; };
+		16B7DCCB214F4727007A95FC /* JAPrintNormal.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintNormal.m; sourceTree = "<group>"; };
+		16B7DCFB214F5C21007A95FC /* NSBundle+TZImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+TZImagePicker.h"; sourceTree = "<group>"; };
+		16B7DCFC214F5C21007A95FC /* NSBundle+TZImagePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+TZImagePicker.m"; sourceTree = "<group>"; };
+		16B7DCFD214F5C21007A95FC /* TZAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetCell.h; sourceTree = "<group>"; };
+		16B7DCFE214F5C21007A95FC /* TZAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZAssetCell.m; sourceTree = "<group>"; };
+		16B7DCFF214F5C21007A95FC /* TZAssetModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZAssetModel.h; sourceTree = "<group>"; };
+		16B7DD00214F5C21007A95FC /* TZAssetModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZAssetModel.m; sourceTree = "<group>"; };
+		16B7DD01214F5C21007A95FC /* TZGifPhotoPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZGifPhotoPreviewController.h; sourceTree = "<group>"; };
+		16B7DD02214F5C21007A95FC /* TZGifPhotoPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZGifPhotoPreviewController.m; sourceTree = "<group>"; };
+		16B7DD03214F5C21007A95FC /* TZImageCropManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZImageCropManager.h; sourceTree = "<group>"; };
+		16B7DD04214F5C21007A95FC /* TZImageCropManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImageCropManager.m; sourceTree = "<group>"; };
+		16B7DD05214F5C21007A95FC /* TZImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZImageManager.h; sourceTree = "<group>"; };
+		16B7DD06214F5C21007A95FC /* TZImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImageManager.m; sourceTree = "<group>"; };
+		16B7DD07214F5C21007A95FC /* TZImagePickerController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TZImagePickerController.bundle; sourceTree = "<group>"; };
+		16B7DD08214F5C21007A95FC /* TZImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZImagePickerController.h; sourceTree = "<group>"; };
+		16B7DD09214F5C21007A95FC /* TZImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZImagePickerController.m; sourceTree = "<group>"; };
+		16B7DD0A214F5C21007A95FC /* TZLocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZLocationManager.h; sourceTree = "<group>"; };
+		16B7DD0B214F5C21007A95FC /* TZLocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZLocationManager.m; sourceTree = "<group>"; };
+		16B7DD0C214F5C21007A95FC /* TZPhotoPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPickerController.h; sourceTree = "<group>"; };
+		16B7DD0D214F5C21007A95FC /* TZPhotoPickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPickerController.m; sourceTree = "<group>"; };
+		16B7DD0E214F5C21007A95FC /* TZPhotoPreviewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPreviewCell.h; sourceTree = "<group>"; };
+		16B7DD0F214F5C21007A95FC /* TZPhotoPreviewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPreviewCell.m; sourceTree = "<group>"; };
+		16B7DD10214F5C21007A95FC /* TZPhotoPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZPhotoPreviewController.h; sourceTree = "<group>"; };
+		16B7DD11214F5C21007A95FC /* TZPhotoPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZPhotoPreviewController.m; sourceTree = "<group>"; };
+		16B7DD12214F5C21007A95FC /* TZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZProgressView.h; sourceTree = "<group>"; };
+		16B7DD13214F5C21007A95FC /* TZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZProgressView.m; sourceTree = "<group>"; };
+		16B7DD14214F5C21007A95FC /* TZVideoPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TZVideoPlayerController.h; sourceTree = "<group>"; };
+		16B7DD15214F5C21007A95FC /* TZVideoPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TZVideoPlayerController.m; sourceTree = "<group>"; };
+		16B7DD16214F5C21007A95FC /* UIView+Layout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Layout.h"; sourceTree = "<group>"; };
+		16B7DD17214F5C21007A95FC /* UIView+Layout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Layout.m"; sourceTree = "<group>"; };
+		16B7DD2A214F821F007A95FC /* JAPrintBySelectController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPrintBySelectController.h; sourceTree = "<group>"; };
+		16B7DD2B214F821F007A95FC /* JAPrintBySelectController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintBySelectController.m; sourceTree = "<group>"; };
+		16B7DD2D214F8605007A95FC /* JAPrintMutiTaskController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPrintMutiTaskController.h; sourceTree = "<group>"; };
+		16B7DD2E214F8605007A95FC /* JAPrintMutiTaskController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintMutiTaskController.m; sourceTree = "<group>"; };
+		16B7DD30214F8F75007A95FC /* JACell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JACell.h; sourceTree = "<group>"; };
+		16B7DD31214F8F75007A95FC /* JACell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JACell.m; sourceTree = "<group>"; };
+		16B7DD33214F926C007A95FC /* JADiffPrinterSyncAsyncPrintController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JADiffPrinterSyncAsyncPrintController.h; sourceTree = "<group>"; };
+		16B7DD34214F926C007A95FC /* JADiffPrinterSyncAsyncPrintController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JADiffPrinterSyncAsyncPrintController.m; sourceTree = "<group>"; };
+		16B7DD36214F9F40007A95FC /* JAPrintMSFileController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPrintMSFileController.h; sourceTree = "<group>"; };
+		16B7DD37214F9F40007A95FC /* JAPrintMSFileController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintMSFileController.m; sourceTree = "<group>"; };
+		16B7DD39214F9F93007A95FC /* JAPrintWebController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPrintWebController.h; sourceTree = "<group>"; };
+		16B7DD3A214F9F93007A95FC /* JAPrintWebController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintWebController.m; sourceTree = "<group>"; };
+		16B7DD3C214FACBB007A95FC /* JAMutiFormattersController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAMutiFormattersController.h; sourceTree = "<group>"; };
+		16B7DD3D214FACBB007A95FC /* JAMutiFormattersController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAMutiFormattersController.m; sourceTree = "<group>"; };
+		16DF40D1214A462D008F5B87 /* car.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = car.jpg; sourceTree = "<group>"; };
+		16DF40D5214B65EE008F5B87 /* APLPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLPrintPageRenderer.h; sourceTree = "<group>"; };
+		16DF40D6214B65EE008F5B87 /* APLPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLPrintPageRenderer.m; sourceTree = "<group>"; };
+		16DF40DA214B903C008F5B87 /* testworld.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = testworld.docx; sourceTree = "<group>"; };
+		16DF40DC214B904A008F5B87 /* testppt.pptx */ = {isa = PBXFileReference; lastKnownFileType = file; path = testppt.pptx; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		16B7340E21425E1600A563AE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		16B7340821425E1600A563AE = {
+			isa = PBXGroup;
+			children = (
+				16B7341321425E1600A563AE /* TestPrint */,
+				16B7341221425E1600A563AE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		16B7341221425E1600A563AE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				16B7341121425E1600A563AE /* TestPrint.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		16B7341321425E1600A563AE /* TestPrint */ = {
+			isa = PBXGroup;
+			children = (
+				16B7DCFA214F5C21007A95FC /* TZImagePickerController */,
+				16B7DCC6214F4608007A95FC /* PrintWays */,
+				16DF40DC214B904A008F5B87 /* testppt.pptx */,
+				161B2433214B957A003C11CE /* test6.doc */,
+				16DF40DA214B903C008F5B87 /* testworld.docx */,
+				161B2431214B946A003C11CE /* test5.docx */,
+				16B7348B214619CA00A563AE /* VIP application form.pdf */,
+				16B7342A2142696F00A563AE /* ceshi.pdf */,
+				16DF40D1214A462D008F5B87 /* car.jpg */,
+				16B7341421425E1600A563AE /* AppDelegate.h */,
+				16B7341521425E1600A563AE /* AppDelegate.m */,
+				16B7341721425E1600A563AE /* ViewController.h */,
+				16B7341821425E1600A563AE /* ViewController.m */,
+				16DF40D5214B65EE008F5B87 /* APLPrintPageRenderer.h */,
+				16DF40D6214B65EE008F5B87 /* APLPrintPageRenderer.m */,
+				16B7341A21425E1600A563AE /* Main.storyboard */,
+				16B7341D21425E1600A563AE /* Assets.xcassets */,
+				16B7341F21425E1600A563AE /* LaunchScreen.storyboard */,
+				16B7342221425E1600A563AE /* Info.plist */,
+				16B7342321425E1600A563AE /* main.m */,
+				16B7DD30214F8F75007A95FC /* JACell.h */,
+				16B7DD31214F8F75007A95FC /* JACell.m */,
+			);
+			path = TestPrint;
+			sourceTree = "<group>";
+		};
+		16B7DCC6214F4608007A95FC /* PrintWays */ = {
+			isa = PBXGroup;
+			children = (
+				16B7DCCA214F4727007A95FC /* JAPrintNormal.h */,
+				16B7DCCB214F4727007A95FC /* JAPrintNormal.m */,
+				16B7DD2A214F821F007A95FC /* JAPrintBySelectController.h */,
+				16B7DD2B214F821F007A95FC /* JAPrintBySelectController.m */,
+				16B7DD2D214F8605007A95FC /* JAPrintMutiTaskController.h */,
+				16B7DD2E214F8605007A95FC /* JAPrintMutiTaskController.m */,
+				16B7DD33214F926C007A95FC /* JADiffPrinterSyncAsyncPrintController.h */,
+				16B7DD34214F926C007A95FC /* JADiffPrinterSyncAsyncPrintController.m */,
+				16B7DD39214F9F93007A95FC /* JAPrintWebController.h */,
+				16B7DD3A214F9F93007A95FC /* JAPrintWebController.m */,
+				16B7DD36214F9F40007A95FC /* JAPrintMSFileController.h */,
+				16B7DD37214F9F40007A95FC /* JAPrintMSFileController.m */,
+				161B2435214BB195003C11CE /* JAPrintPageRenderer.h */,
+				161B2436214BB195003C11CE /* JAPrintPageRenderer.m */,
+				16B7DD3C214FACBB007A95FC /* JAMutiFormattersController.h */,
+				16B7DD3D214FACBB007A95FC /* JAMutiFormattersController.m */,
+			);
+			path = PrintWays;
+			sourceTree = "<group>";
+		};
+		16B7DCFA214F5C21007A95FC /* TZImagePickerController */ = {
+			isa = PBXGroup;
+			children = (
+				16B7DCFB214F5C21007A95FC /* NSBundle+TZImagePicker.h */,
+				16B7DCFC214F5C21007A95FC /* NSBundle+TZImagePicker.m */,
+				16B7DCFD214F5C21007A95FC /* TZAssetCell.h */,
+				16B7DCFE214F5C21007A95FC /* TZAssetCell.m */,
+				16B7DCFF214F5C21007A95FC /* TZAssetModel.h */,
+				16B7DD00214F5C21007A95FC /* TZAssetModel.m */,
+				16B7DD01214F5C21007A95FC /* TZGifPhotoPreviewController.h */,
+				16B7DD02214F5C21007A95FC /* TZGifPhotoPreviewController.m */,
+				16B7DD03214F5C21007A95FC /* TZImageCropManager.h */,
+				16B7DD04214F5C21007A95FC /* TZImageCropManager.m */,
+				16B7DD05214F5C21007A95FC /* TZImageManager.h */,
+				16B7DD06214F5C21007A95FC /* TZImageManager.m */,
+				16B7DD07214F5C21007A95FC /* TZImagePickerController.bundle */,
+				16B7DD08214F5C21007A95FC /* TZImagePickerController.h */,
+				16B7DD09214F5C21007A95FC /* TZImagePickerController.m */,
+				16B7DD0A214F5C21007A95FC /* TZLocationManager.h */,
+				16B7DD0B214F5C21007A95FC /* TZLocationManager.m */,
+				16B7DD0C214F5C21007A95FC /* TZPhotoPickerController.h */,
+				16B7DD0D214F5C21007A95FC /* TZPhotoPickerController.m */,
+				16B7DD0E214F5C21007A95FC /* TZPhotoPreviewCell.h */,
+				16B7DD0F214F5C21007A95FC /* TZPhotoPreviewCell.m */,
+				16B7DD10214F5C21007A95FC /* TZPhotoPreviewController.h */,
+				16B7DD11214F5C21007A95FC /* TZPhotoPreviewController.m */,
+				16B7DD12214F5C21007A95FC /* TZProgressView.h */,
+				16B7DD13214F5C21007A95FC /* TZProgressView.m */,
+				16B7DD14214F5C21007A95FC /* TZVideoPlayerController.h */,
+				16B7DD15214F5C21007A95FC /* TZVideoPlayerController.m */,
+				16B7DD16214F5C21007A95FC /* UIView+Layout.h */,
+				16B7DD17214F5C21007A95FC /* UIView+Layout.m */,
+			);
+			name = TZImagePickerController;
+			path = "../../../../../Downloads/iOSProject-master/iOSProject/Pods/TZImagePickerController/TZImagePickerController/TZImagePickerController";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		16B7341021425E1600A563AE /* TestPrint */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16B7342721425E1600A563AE /* Build configuration list for PBXNativeTarget "TestPrint" */;
+			buildPhases = (
+				16B7340D21425E1600A563AE /* Sources */,
+				16B7340E21425E1600A563AE /* Frameworks */,
+				16B7340F21425E1600A563AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TestPrint;
+			productName = TestPrint;
+			productReference = 16B7341121425E1600A563AE /* TestPrint.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		16B7340921425E1600A563AE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = Jacob;
+				TargetAttributes = {
+					16B7341021425E1600A563AE = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 16B7340C21425E1600A563AE /* Build configuration list for PBXProject "TestPrint" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 16B7340821425E1600A563AE;
+			productRefGroup = 16B7341221425E1600A563AE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				16B7341021425E1600A563AE /* TestPrint */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		16B7340F21425E1600A563AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				161B2432214B946B003C11CE /* test5.docx in Resources */,
+				16DF40D2214A462E008F5B87 /* car.jpg in Resources */,
+				16B7348C214619CA00A563AE /* VIP application form.pdf in Resources */,
+				161B2434214B957A003C11CE /* test6.doc in Resources */,
+				16B7DD1E214F5C22007A95FC /* TZImagePickerController.bundle in Resources */,
+				16DF40DD214B904A008F5B87 /* testppt.pptx in Resources */,
+				16B7342121425E1600A563AE /* LaunchScreen.storyboard in Resources */,
+				16B7342B2142696F00A563AE /* ceshi.pdf in Resources */,
+				16B7341E21425E1600A563AE /* Assets.xcassets in Resources */,
+				16DF40DB214B903C008F5B87 /* testworld.docx in Resources */,
+				16B7341C21425E1600A563AE /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		16B7340D21425E1600A563AE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16B7DD21214F5C22007A95FC /* TZPhotoPickerController.m in Sources */,
+				16B7341921425E1600A563AE /* ViewController.m in Sources */,
+				16B7342421425E1600A563AE /* main.m in Sources */,
+				16B7DD3B214F9F93007A95FC /* JAPrintWebController.m in Sources */,
+				16B7DD20214F5C22007A95FC /* TZLocationManager.m in Sources */,
+				16B7DD2F214F8605007A95FC /* JAPrintMutiTaskController.m in Sources */,
+				16B7DD38214F9F40007A95FC /* JAPrintMSFileController.m in Sources */,
+				16B7DD23214F5C22007A95FC /* TZPhotoPreviewController.m in Sources */,
+				16B7DD35214F926C007A95FC /* JADiffPrinterSyncAsyncPrintController.m in Sources */,
+				16B7DD1B214F5C22007A95FC /* TZGifPhotoPreviewController.m in Sources */,
+				16B7DCCC214F4727007A95FC /* JAPrintNormal.m in Sources */,
+				16B7DD18214F5C22007A95FC /* NSBundle+TZImagePicker.m in Sources */,
+				16B7DD26214F5C22007A95FC /* UIView+Layout.m in Sources */,
+				161B2437214BB195003C11CE /* JAPrintPageRenderer.m in Sources */,
+				16B7341621425E1600A563AE /* AppDelegate.m in Sources */,
+				16B7DD22214F5C22007A95FC /* TZPhotoPreviewCell.m in Sources */,
+				16B7DD24214F5C22007A95FC /* TZProgressView.m in Sources */,
+				16B7DD1D214F5C22007A95FC /* TZImageManager.m in Sources */,
+				16B7DD25214F5C22007A95FC /* TZVideoPlayerController.m in Sources */,
+				16B7DD3E214FACBB007A95FC /* JAMutiFormattersController.m in Sources */,
+				16B7DD1A214F5C22007A95FC /* TZAssetModel.m in Sources */,
+				16B7DD32214F8F75007A95FC /* JACell.m in Sources */,
+				16B7DD1F214F5C22007A95FC /* TZImagePickerController.m in Sources */,
+				16B7DD1C214F5C22007A95FC /* TZImageCropManager.m in Sources */,
+				16B7DD19214F5C22007A95FC /* TZAssetCell.m in Sources */,
+				16DF40D7214B65EE008F5B87 /* APLPrintPageRenderer.m in Sources */,
+				16B7DD2C214F821F007A95FC /* JAPrintBySelectController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		16B7341A21425E1600A563AE /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16B7341B21425E1600A563AE /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		16B7341F21425E1600A563AE /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				16B7342021425E1600A563AE /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		16B7342521425E1600A563AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		16B7342621425E1600A563AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		16B7342821425E1600A563AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3AM9U4HK7K;
+				INFOPLIST_FILE = TestPrint/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cn.utopa.TestPrint;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		16B7342921425E1600A563AE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3AM9U4HK7K;
+				INFOPLIST_FILE = TestPrint/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.cn.utopa.TestPrint;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		16B7340C21425E1600A563AE /* Build configuration list for PBXProject "TestPrint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16B7342521425E1600A563AE /* Debug */,
+				16B7342621425E1600A563AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		16B7342721425E1600A563AE /* Build configuration list for PBXNativeTarget "TestPrint" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16B7342821425E1600A563AE /* Debug */,
+				16B7342921425E1600A563AE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 16B7340921425E1600A563AE /* Project object */;
+}
