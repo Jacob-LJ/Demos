@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-/// 同类型多个任务单个打印机连续打印
+/// 同类型多个任务单个打印机连续打印 - UIPrintInteractionController 的 printingItems 的使用
 @interface JAPrintMutiTaskController : UIViewController
 
 @end

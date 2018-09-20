@@ -95,7 +95,7 @@
     [self printOperation:url printInfo:printInfo];
 }
 
-/// 打印 ALAsset
+/// 打印 Asset
 - (void)printAsset {
     [self getAsset];
 }

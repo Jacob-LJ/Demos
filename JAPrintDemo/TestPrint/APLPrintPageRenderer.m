@@ -180,7 +180,7 @@ static CGFloat HeaderFooterHeight(CGFloat imageableAreaMargin, CGFloat textHeigh
 {
     NSString *localizedPageNumberString = NSLocalizedString(@"Page %d of %d", @"Page Count String");
     /*
-     Compute the page numbers so that the first page in the range being printed is always page 1 of N, where N is the total number of pages.
+     Compute the page numbers so that the first page in the range being printed is always page 1 of     N, where N is the total number of pages.
      */
     NSString *pageNumberString = [NSString stringWithFormat:localizedPageNumberString,
                                   pageIndex+1 - pageRange.location, pageRange.length];

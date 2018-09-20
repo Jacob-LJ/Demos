@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-/// 通过 UIPrintPageRenderer 整合打印多个 Formatters
+/// 通过 UIPrintPageRenderer 整合打印多个 Formatters - UIPrintInteractionController 的 printPageRenderer 中的 addPrintFormatter:startingAtPageAtIndex: 的使用
 @interface JAMutiFormattersController : UIViewController
 
 @end

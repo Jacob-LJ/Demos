@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-/// 打印本地 doc(x)，ppt(x)的文件
+/// 打印本地 doc(x)，ppt(x)的文件  - UIPrintInteractionController 的 printFormatter 的使用
 @interface JAPrintMSFileController : UIViewController
 
 @end

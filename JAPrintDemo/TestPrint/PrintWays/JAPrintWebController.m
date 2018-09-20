@@ -9,7 +9,7 @@
 #import "JAPrintWebController.h"
 #import <WebKit/WebKit.h>
 
-/// 简单打印网页显示的内容 注意页面的横竖
+/// 简单打印网页显示的内容 注意页面的横竖 - UIPrintInteractionController 的 printFormatter 的使用
 @interface JAPrintWebController ()<UIPrintInteractionControllerDelegate>
 
 @property (nonatomic, copy) NSString *printerUrl1;

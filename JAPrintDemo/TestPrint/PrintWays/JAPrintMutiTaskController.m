@@ -9,7 +9,7 @@
 #import "JAPrintMutiTaskController.h"
 
 
-/// 同类型多个任务单个打印机连续打印
+/// 同类型多个任务单个打印机连续打印 - UIPrintInteractionController 的 printingItems 的使用
 @interface JAPrintMutiTaskController ()<UIPrintInteractionControllerDelegate>
 
 @property (nonatomic, copy) NSString *printerUrl1;
@@ -39,7 +39,7 @@
 #pragma mark - 预览控制器形式打印
 /// 预览式 同类型多个任务 打印
 - (IBAction)previewPrintOneTypeMutiTasks:(id)sender {
-    NSArray *items = @[self.taskData1, self.taskData2, self.taskData3];
+    NSArray *items = @[self.taskData1, self.taskData1, self.taskData1];
     // NSData 数组
     [self printItems:items]; // 可以打印,但不支持预览，因为默认就不支持 pageRange，UIPrintInteractionController的printingItems属性内官方有说明
 }
@@ -54,8 +54,9 @@
     // 打印预览控制器
     UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
     pic.delegate = self;
-    pic.printingItems = items; //// array of NSData, NSURL, UIImage, ALAsset. does not support page range
+    pic.printingItems = items; //// array of NSData, NSURL, UIImage, ALAsset. does not support page range // 不支持打印预览的
     pic.printInfo = printInfo;
+
     
     [pic presentAnimated:YES completionHandler:^(UIPrintInteractionController * _Nonnull printInteractionController, BOOL completed, NSError * _Nullable error) {
         if (!completed && error)
@@ -101,8 +102,8 @@
     // 打印预览控制器
     UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
     pic.delegate = self;
-    pic.printingItems = items; //// array of NSData, NSURL, UIImage, ALAsset. does not support page range
     pic.printInfo = printInfo;
+    pic.printingItems = items; //// array of NSData, NSURL, UIImage, ALAsset. does not support page range
     
     // 直接链接打印机打印
     UIPrinter *airPrinter = [UIPrinter printerWithURL:[NSURL URLWithString:self.printerUrl1]];

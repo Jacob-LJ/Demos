@@ -41,6 +41,7 @@
 		16B7DD38214F9F40007A95FC /* JAPrintMSFileController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD37214F9F40007A95FC /* JAPrintMSFileController.m */; };
 		16B7DD3B214F9F93007A95FC /* JAPrintWebController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD3A214F9F93007A95FC /* JAPrintWebController.m */; };
 		16B7DD3E214FACBB007A95FC /* JAMutiFormattersController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD3D214FACBB007A95FC /* JAMutiFormattersController.m */; };
+		16B7DD412150E07F007A95FC /* JAPrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD402150E07F007A95FC /* JAPrintViewController.m */; };
 		16DF40D2214A462E008F5B87 /* car.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 16DF40D1214A462D008F5B87 /* car.jpg */; };
 		16DF40D7214B65EE008F5B87 /* APLPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 16DF40D6214B65EE008F5B87 /* APLPrintPageRenderer.m */; };
 		16DF40DB214B903C008F5B87 /* testworld.docx in Resources */ = {isa = PBXBuildFile; fileRef = 16DF40DA214B903C008F5B87 /* testworld.docx */; };
@@ -109,6 +110,8 @@
 		16B7DD3A214F9F93007A95FC /* JAPrintWebController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintWebController.m; sourceTree = "<group>"; };
 		16B7DD3C214FACBB007A95FC /* JAMutiFormattersController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAMutiFormattersController.h; sourceTree = "<group>"; };
 		16B7DD3D214FACBB007A95FC /* JAMutiFormattersController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAMutiFormattersController.m; sourceTree = "<group>"; };
+		16B7DD3F2150E07F007A95FC /* JAPrintViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JAPrintViewController.h; sourceTree = "<group>"; };
+		16B7DD402150E07F007A95FC /* JAPrintViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JAPrintViewController.m; sourceTree = "<group>"; };
 		16DF40D1214A462D008F5B87 /* car.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = car.jpg; sourceTree = "<group>"; };
 		16DF40D5214B65EE008F5B87 /* APLPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APLPrintPageRenderer.h; sourceTree = "<group>"; };
 		16DF40D6214B65EE008F5B87 /* APLPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APLPrintPageRenderer.m; sourceTree = "<group>"; };
@@ -191,6 +194,8 @@
 				161B2436214BB195003C11CE /* JAPrintPageRenderer.m */,
 				16B7DD3C214FACBB007A95FC /* JAMutiFormattersController.h */,
 				16B7DD3D214FACBB007A95FC /* JAMutiFormattersController.m */,
+				16B7DD3F2150E07F007A95FC /* JAPrintViewController.h */,
+				16B7DD402150E07F007A95FC /* JAPrintViewController.m */,
 			);
 			path = PrintWays;
 			sourceTree = "<group>";
@@ -316,6 +321,7 @@
 				16B7342421425E1600A563AE /* main.m in Sources */,
 				16B7DD3B214F9F93007A95FC /* JAPrintWebController.m in Sources */,
 				16B7DD20214F5C22007A95FC /* TZLocationManager.m in Sources */,
+				16B7DD412150E07F007A95FC /* JAPrintViewController.m in Sources */,
 				16B7DD2F214F8605007A95FC /* JAPrintMutiTaskController.m in Sources */,
 				16B7DD38214F9F40007A95FC /* JAPrintMSFileController.m in Sources */,
 				16B7DD23214F5C22007A95FC /* TZPhotoPreviewController.m in Sources */,

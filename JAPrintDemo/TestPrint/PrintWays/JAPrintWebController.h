@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-/// 简单打印网页显示的内容
+/// 简单打印网页显示的内容 注意页面的横竖 - UIPrintInteractionController 的 printFormatter 的使用
 @interface JAPrintWebController : UIViewController
 
 @end

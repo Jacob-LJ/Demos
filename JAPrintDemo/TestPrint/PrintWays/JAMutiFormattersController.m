@@ -10,7 +10,7 @@
 #import <WebKit/WebKit.h>
 #import "JAPrintPageRenderer.h"
 
-/// 通过 UIPrintPageRenderer 整合打印多个 Formatters
+/// 通过 UIPrintPageRenderer 整合打印多个 Formatters - UIPrintInteractionController 的 printPageRenderer 中的 addPrintFormatter:startingAtPageAtIndex: 的使用
 @interface JAMutiFormattersController ()<UIPrintInteractionControllerDelegate>
 
 @property (nonatomic, strong) WKWebView *webView;
@@ -122,7 +122,10 @@
 //    UIPrintPageRenderer *renderer = [self customerRenderer];
     
     // 手动自己计算页数
-    UIPrintPageRenderer *renderer = [self selfCaculateStarPageRender];
+//    UIPrintPageRenderer *renderer = [self selfCaculateStarPageRender];
+    
+    //
+    UIPrintPageRenderer *renderer = [self justAddInPrintFormattersArray];
     
     
     
@@ -167,6 +170,17 @@
     [renderer addPrintFormatter:self.webFormatter1 startingAtPageAtIndex:0]; // 2页
     [renderer addPrintFormatter:self.webFormatter2 startingAtPageAtIndex:2]; // 1页
     [renderer addPrintFormatter:self.webFormatter3 startingAtPageAtIndex:3]; // 2页
+    return renderer;
+}
+
+/// 直接使用 UIPrintPageRenderer 中的 printFormatters 属性 （同样存在startingAtPageAtIndex方法的问题）
+- (UIPrintPageRenderer *)justAddInPrintFormattersArray {
+    UIPrintPageRenderer *renderer = [[UIPrintPageRenderer alloc] init];
+    // 不指定的话会有问题
+    self.webFormatter1.startPage = 0;
+    self.webFormatter2.startPage = 2;
+    self.webFormatter3.startPage = 3;
+    renderer.printFormatters = @[self.webFormatter1, self.webFormatter2, self.webFormatter3];
     return renderer;
 }
 
