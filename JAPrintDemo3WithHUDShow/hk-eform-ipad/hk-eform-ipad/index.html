@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+            <title>测试组件</title>
+            </head>
+    
+    <body>
+        <script>
+            function takePicture() {
+                var str=JSON.stringify({
+                                       "parameter" : "{\"tailorType\" : \"2\", \"cutProportion\" : \"2.33333\", \"quality\" : \"0.3\", \"zoom\" : {\"width\" : \"200\", \"height\" : \"100\"}}",
+                                       "funcName" : "JSCameraTakePicture", "className" : "JSPicturePickerPlugin",
+                                       "callBack" : "getPictureSuccess"
+                                       });
+                window.webkit.messageHandlers.nativeInterface.postMessage(str);
+            }
+        
+            function selectPicture() {
+                var str=JSON.stringify({"parameter" : "{\"tailorType\" : \"1\"}", "funcName" : "JSLibrarySelectPicture", "className" : "JSPicturePickerPlugin", "callBack" : "getPictureSuccess"});
+               
+               window.webkit.messageHandlers.nativeInterface.postMessage(str);
+            }
+        
+            function pickerAlert() {
+                var str=JSON.stringify({"parameter" : "{\"tailorType\" : \"2\", \"cutProportion\" : \"2.33333\"}", "funcName" : "JSPicturePickerAlert", "className" : "JSPicturePickerPlugin", "callBack" : "getPictureSuccess"});
+                window.webkit.messageHandlers.nativeInterface.postMessage(str);
+            }
+        
+            function getPictureSuccess(image) { // 回调函数
+            
+                var smallImage = document.getElementById('image');
+                smallImage.style.display = 'block';
+                smallImage.src = "data:image/jpeg;base64," + image["obj"];
+
+            }
+        
+            function qrcodeScan() {
+                var str=JSON.stringify({"funcName" : "JSQRCodeScan", "className" : "JSQRCodePlugin", "callBack" : "scanQRCodeSuccess"});
+                window.webkit.messageHandlers.nativeInterface.postMessage(str);
+            }
+        
+            function scanQRCodeSuccess(message) {
+                var qrcodeInput = document.getElementById("qrcodeString");
+                qrcodeInput.value = message["obj"];
+            }
+        
+            function hudShow() {
+                var str=JSON.stringify({"funcName" : "JSShowProgress", "className" : "JSProgressPlugin", "callBack" : "scanQRCodeSuccess"});
+                window.webkit.messageHandlers.nativeInterface.postMessage(str);
+            }
+        
+            function showPosition() {
+                var str=JSON.stringify({"funcName" : "JSgetLocationCoordinate", "className" : "JSPositionPlugin", "callBack" : "positionCallback"});
+                window.webkit.messageHandlers.nativeInterface.postMessage(str);
+            }
+        
+            function positionCallback (message) {
+                var qrcodeInput = document.getElementById("qrcodeString");
+                qrcodeInput.value = message["obj"];
+            }
+        
+        
+        
+        
+        function getcatlogs() {
+            var str=JSON.stringify({"parameter" : "{\"msgId\":\"17\",\"parameter2\":\"2\"}","funcName" : "JSgetMessagesById", "className" : "JSMessagePlugin", "callBack" : "testCallback"});
+            window.webkit.messageHandlers.nativeInterface.postMessage(str);
+        }
+        function testCallback (message) {
+            
+            console.log(message);
+<!--            var message1 = JSON.parse(message);-->
+            var qrcodeInput = document.getElementById("testfunction");
+            qrcodeInput.value = JSON.stringify(message);
+        }
+        function getcatlogsMessage() {
+            var str=JSON.stringify({"parameter" : "{\"categoryId\":3,\"lastmsgId\":10,\"count\":4}","funcName" : "JSgetMessagesForCatalog", "className" : "JSMessagePlugin", "callBack" : "testCallback"});
+            window.webkit.messageHandlers.nativeInterface.postMessage(str);
+        }
+        
+<!--        function goHome() {-->
+<!--            var str=JSON.stringify({"parameter" : "{}","funcName" : "goHome", "className" : "JSNavigationPlugin", "callBack" : "testCallback"});-->
+<!--            window.webkit.messageHandlers.nativeInterface.postMessage(str);-->
+<!--        }-->
+        function goHome() {
+            var str=JSON.stringify({"parameter" : "{\"msgId\":\"3\"}","funcName" : "JSgetMessagesById", "className" : "JSMessagePlugin", "callBack" : "testCallback"});
+            window.webkit.messageHandlers.nativeInterface.postMessage(str);
+        }
+        
+        // 打印操作
+        function printPDFOperation() {
+            var str = JSON.stringify({
+                                   "parameter" : "{\"fileUrls\":[\"http://kmmc.in/wp-content/uploads/2014/01/lesson2.pdf\"]}",
+                                    "funcName" : "JSPrintRemotePdfs",
+                                   "className" : "JSPrintPlugin",
+                                    "callBack" : "JSPrintRemotePdfsCallBack"});
+            window.webkit.messageHandlers.nativeInterface.postMessage(str);
+        }
+        // \"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf\",
+        
+        // 打印操作回调
+        function JSPrintRemotePdfsCallBack (message) {
+            console.log(message);
+        }
+        
+        
+        </script>
+        </br>
+        </br>
+        </br>
+        </br>
+        <input type="button" value="打印电子表单" style="font-size:36px; width: 400px; height: 80px;" onclick="printPDFOperation()">
+        </br>
+        <input type="button" value="拍照"  style="font-size:36px; width: 180px; height: 80px;" onclick="takePicture()"/>
+        <input type="button" value="从相册选择" style="font-size:36px; width: 250px; height: 80px;" onclick="selectPicture()">
+        <input type="button" value="摄像头弹框" style="font-size:36px; width: 250px; height: 80px;" onclick="pickerAlert()">
+        <input type="button" value="扫一扫" style="font-size:36px; width: 200px; height: 80px;" onclick="qrcodeScan()">
+        <input type="button" value="显示菊花" style="font-size:36px; width: 220px; height: 80px;" onclick="hudShow()">
+        <input type="button" value="获取经纬度" style="font-size:36px; width: 250px; height: 80px;" onclick="showPosition()">
+        <input type="button" value="获取分类" style="font-size:36px; width: 250px; height: 80px;" onclick="getcatlogs()">
+        <input type="button" value="获取某分类全部消息" style="font-size:36px; width: 400px; height: 80px;" onclick="getcatlogsMessage()">
+        <input type="button" value="goHome" style="font-size:36px; width: 400px; height: 80px;" onclick="goHome()">
+        </br>
+        </br>
+        </br>
+        </br>
+        <img id="image" src="test.png" width="400" height="200"></img>
+<!--        <input id="testfunction" type="text" style="font-size:36px; width: 800px; height: 300px;">-->
+        <input id="qrcodeString" type="text" style="font-size:36px; width: 800px; height: 30px;">
+        <textarea rows="" cols="" id="testfunction" style="font-size:36px; width: 800px; height: 1000px;" onfocus=this.blur()></textarea>
+    </body>
+    
+</html>
