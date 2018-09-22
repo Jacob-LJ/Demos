@@ -16,6 +16,7 @@
 #import "JAPrintWebController.h"
 #import "JAPrintMSFileController.h"
 #import "JAMutiFormattersController.h"
+#import "JAPrintViewController.h"
 
 @interface ViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -137,9 +138,10 @@
             break;
         }
         case 11: {
-            title = @"Normal - PDF";
+            title = @"打印 View (不能直接打印,转 image 或 pdf)";
             cell.clickBlock = ^{
-                
+                JAPrintViewController *viewVC = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:NSStringFromClass([JAPrintViewController class])];
+                [weakSelf.navigationController pushViewController:viewVC animated:YES];
             };
             break;
         }

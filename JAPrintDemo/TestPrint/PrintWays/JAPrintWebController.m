@@ -53,6 +53,7 @@
     
     // 格式化 view 内容打印
     UIViewPrintFormatter *viewFormatter = [self.webView viewPrintFormatter];
+    // 还有一种思路，使用 printPageRenderer 包装 webview 的 printFormatter，然后 将printPageRenderer转为 PDF data，参考：https://stackoverflow.com/a/26276745
     
     // 预览展示打印
     UIPrintInteractionController *pic = [UIPrintInteractionController sharedPrintController];
