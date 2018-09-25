@@ -58,7 +58,7 @@
 #pragma mark - to viewPrintFormatter
 - (UIPrintFormatter *)formatterFromView {
     // UIView 实例直接调用 viewPrintFormatter 无效
-    UIPrintFormatter *formatter = [self.view viewPrintFormatter]; // 虽然 -viewPrintFormatter 是 UIView 的分类方法，但是只能用于 UITextView, MKMapView and UIWebView/WKWebView等实例对象上。UIPrintFormatter定义上有说明
+    UIPrintFormatter *formatter = [self.view viewPrintFormatter]; // 虽然 -viewPrintFormatter 是 UIView 的分类方法，但是只能用于 UITextView, MKMapView and UIWebView/WKWebView等实例对象上。UIPrintFormatter官方定义上有说明
     return formatter;
 }
 
