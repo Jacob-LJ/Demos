@@ -91,13 +91,14 @@
         // 打印操作
         function printPDFOperation() {
             var str = JSON.stringify({
-                                   "parameter" : "{\"fileUrls\":[\"http://kmmc.in/wp-content/uploads/2014/01/lesson2.pdf\"]}",
+                                   "parameter" : "{\"fileUrls\":[\"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf\",]}",
                                     "funcName" : "JSPrintRemotePdfs",
                                    "className" : "JSPrintPlugin",
                                     "callBack" : "JSPrintRemotePdfsCallBack"});
             window.webkit.messageHandlers.nativeInterface.postMessage(str);
         }
-        // \"http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf\",
+        //
+        // \"http://kmmc.in/wp-content/uploads/2014/01/lesson2.pdf\"
         
         // 打印操作回调
         function JSPrintRemotePdfsCallBack (message) {

@@ -10,6 +10,7 @@
 		146ECEE530597B48296F2E60 /* libPods-hk-eform-ipad.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 766C18F68F92F7C9015F70C8 /* libPods-hk-eform-ipad.a */; };
 		1622EE152151F2B900CC3E31 /* JSPrintPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1622EE142151F2B900CC3E31 /* JSPrintPlugin.m */; };
 		16402CA12154969F007D8583 /* MBProgressHUD+NHAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 16402C9F2154969F007D8583 /* MBProgressHUD+NHAdd.m */; };
+		16402CA62159E710007D8583 /* EFPrintTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 16402CA52159E710007D8583 /* EFPrintTool.m */; };
 		16B7DD502150E3D1007A95FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD4F2150E3D1007A95FC /* AppDelegate.m */; };
 		16B7DD562150E3D1007A95FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16B7DD542150E3D1007A95FC /* Main.storyboard */; };
 		16B7DD582150E3D1007A95FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16B7DD572150E3D1007A95FC /* Assets.xcassets */; };
@@ -31,6 +32,8 @@
 		16402C9E2154969F007D8583 /* MBProgressHUD+NHAdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD+NHAdd.h"; sourceTree = "<group>"; };
 		16402C9F2154969F007D8583 /* MBProgressHUD+NHAdd.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD+NHAdd.m"; sourceTree = "<group>"; };
 		16402CA02154969F007D8583 /* MBProgressHUD_NHExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD_NHExtend.h; sourceTree = "<group>"; };
+		16402CA42159E710007D8583 /* EFPrintTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EFPrintTool.h; sourceTree = "<group>"; };
+		16402CA52159E710007D8583 /* EFPrintTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EFPrintTool.m; sourceTree = "<group>"; };
 		16B7DD4B2150E3D1007A95FC /* hk-eform-ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hk-eform-ipad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16B7DD4E2150E3D1007A95FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		16B7DD4F2150E3D1007A95FC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 		16402C9B21549671007D8583 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				16402CA32159E6E5007D8583 /* PrintTool */,
 				16B7DD672150EFBB007A95FC /* WebBridge */,
 				16402C9C21549692007D8583 /* Category */,
 			);
@@ -99,6 +103,15 @@
 				16402C9F2154969F007D8583 /* MBProgressHUD+NHAdd.m */,
 			);
 			path = NHHUDExtend;
+			sourceTree = "<group>";
+		};
+		16402CA32159E6E5007D8583 /* PrintTool */ = {
+			isa = PBXGroup;
+			children = (
+				16402CA42159E710007D8583 /* EFPrintTool.h */,
+				16402CA52159E710007D8583 /* EFPrintTool.m */,
+			);
+			path = PrintTool;
 			sourceTree = "<group>";
 		};
 		16B7DD422150E3D1007A95FC = {
@@ -325,6 +338,7 @@
 				16B7DD5E2150E3D1007A95FC /* main.m in Sources */,
 				16B7DD7B2150EFD1007A95FC /* JSInvokedCommand.m in Sources */,
 				16B7DD792150EFD1007A95FC /* JSBridgeWKWebViewController.m in Sources */,
+				16402CA62159E710007D8583 /* EFPrintTool.m in Sources */,
 				16B7DD7C2150EFD1007A95FC /* JSPlugIn.m in Sources */,
 				16B7DD7A2150EFD1007A95FC /* JSHandler.m in Sources */,
 				1622EE152151F2B900CC3E31 /* JSPrintPlugin.m in Sources */,

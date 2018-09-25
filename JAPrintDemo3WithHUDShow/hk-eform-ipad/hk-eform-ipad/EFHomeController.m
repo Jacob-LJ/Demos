@@ -7,7 +7,7 @@
 //
 
 #import "EFHomeController.h"
-#import "JSPrintPlugin.h"
+#import "EFPrintTool.h"
 
 @interface EFHomeController ()
 
@@ -38,7 +38,7 @@
 }
 
 - (void)selectPrinter {
-    [JSPrintPlugin selectPrinter];
+    [EFPrintTool selectPrinter];
 }
 
 

@@ -13,7 +13,4 @@
 /// 根据传入的 urls 打印远程 pdf 文件
 - (void)JSPrintRemotePdfs:(JSInvokedCommand *)command;
 
-/// 选择打印机
-+ (void)selectPrinter;
-
 @end
