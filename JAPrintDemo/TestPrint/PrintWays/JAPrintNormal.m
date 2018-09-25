@@ -146,7 +146,7 @@
         pic.printInfo = printInfo;
         pic.printingItem = item; // // single NSData, NSURL, UIImage, ALAsset
         
-        //官方建议 iPhone 或 iPad 的弹出方式分开处理
+        //官方建议 iPhone 或 iPad 的弹出方式分开处理, 同时，指定 iPad 可用的方式，不能用于 iPhone 上，iPad 只有指定弹出位置和大小的方式，不同于 iPhone，可以通过全屏 modal 的样式弹出
         //        if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         //            [pic presentFromBarButtonItem:self.printButton animated:YES
         //                        completionHandler:completionHandler];

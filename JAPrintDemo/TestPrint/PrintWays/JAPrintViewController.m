@@ -37,12 +37,14 @@
     pic.printInfo = printInfo;
     
 //    pic.printFormatter = [self formatterFromView]; // 无效使用
+    
     // 将 view 转为 UIImage
 //    pic.printingItem = [self imageFromView:self.view];
+    
     // 将 view 转为 PDF
     pic.printingItem = [self createPDFfromUIView:self.view saveToDocumentsWithFileName:nil];
     
-    // 打印 scrollView 时候，转成 长PDF/长image 后如何分页打印？
+    //(TODO) 打印 scrollView 时候，转成 长PDF/长image 后如何分页打印？
     // 1、使用 webview 显示长的 PDF/image，再打印，因为打印 webview 内容时，会自动进行分页，或 pagerenderer 中设置
     // 2、高质量 view to pdf 参考：https://stackoverflow.com/a/35442187
     
