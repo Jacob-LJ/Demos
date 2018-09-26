@@ -17,7 +17,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"index.html" ofType:nil];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"indexh5.html" ofType:nil];
         self.startPage = path;
     }
     return self;

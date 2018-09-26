@@ -11,16 +11,6 @@
 #define kEFPrinterURL @"EFPrinterURL"
 #define kEFPrinterName @"EFPrinterName"
 
-typedef NS_ENUM(NSUInteger, HUDStatusType) {
-    HUDStatusTypePrintSuccess = 1,
-    HUDStatusTypePrintFailure,
-    HUDStatusTypePrinterOffLine,
-    HUDStatusTypePrinting,
-    HUDStatusTypeNoTaskToPrint,
-    HUDStatusTypeContactPrinter,
-    HUDStatusTypeConnectFileUrl,
-};
-
 @interface EFPrintTool ()<UIPrinterPickerControllerDelegate>
 
 @property (nonatomic, strong) UIViewController *topVC;
@@ -38,7 +28,7 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
 }
 
 /// 打印远程文件
-- (void)printFiles:(NSArray<NSString *> *)fileUrls compeletion:(void(^)(BOOL completed))completionBlock {
+- (void)printFiles:(NSArray<NSString *> *)fileUrls compeletion:(CompletionBlock)completionBlock {
     
     self.fileUrls = fileUrls;
     __weak typeof(self) weakSelf = self;
@@ -46,28 +36,21 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
     // 是否保存打印机信息
     NSString *printerUrlStr = [[NSUserDefaults standardUserDefaults] objectForKey:kEFPrinterURL];
     if (printerUrlStr.length) {
-        [self printFiles:fileUrls printerUrl:[NSURL URLWithString:printerUrlStr] completionBlock:^(BOOL completed) {
-            if (completionBlock) {
-                completionBlock(completed);
-            }
-        }];
+        // 通过保存的打印机 打印
+        [self printFiles:fileUrls printerUrl:[NSURL URLWithString:printerUrlStr] completionBlock:completionBlock];
     } else {
         /// 没有选择过打印机，优先选择打印机
         [self selectPrinterCompletion:^(BOOL didSavePrinterUrl, NSString *printerURLStr) {
             if (didSavePrinterUrl) {
                 // 完成打印机选择后进行打印
-                [weakSelf printFiles:fileUrls printerUrl:[NSURL URLWithString:printerURLStr] completionBlock:^(BOOL completed) {
-                    if (completionBlock) {
-                        completionBlock(completed);
-                    }
-                }];
+                [weakSelf printFiles:fileUrls printerUrl:[NSURL URLWithString:printerURLStr] completionBlock:completionBlock];
             }
         }];
     }
 }
 
 /// 选择打印机
-- (void)selectPrinterCompletion:(void(^)(BOOL didSavePrinterUrl, NSString *printerURLStr))completionBlcok {
+- (void)selectPrinterCompletion:(void(^)(BOOL didSavePrinterUrl, NSString *printerURLStr))completion {
     
     UIPrinterPickerController *pickerController = [UIPrinterPickerController printerPickerControllerWithInitiallySelectedPrinter:nil];
     UIBarButtonItem *rightItem = self.topVC.navigationItem.rightBarButtonItem;
@@ -86,8 +69,8 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
             NSLog(@"已选择打印机：URL-%@, Name-%@",printerUrlStr, printerName);
         }
         
-        if (completionBlcok) {
-            completionBlcok(didsave, printerUrlStr);
+        if (completion) {
+            completion(didsave, printerUrlStr);
         }
     }];
     
@@ -96,15 +79,15 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
 #pragma mark - 打印操作
 
 /// 链接打印机直接打印
-- (void)printFiles:(NSArray<NSString *> *)fileUrls printerUrl:(NSURL *)printerUrl completionBlock:(void(^)(BOOL completed))completionBlock {
+- (void)printFiles:(NSArray<NSString *> *)fileUrls printerUrl:(NSURL *)printerUrl completionBlock:(CompletionBlock)completionBlock {
     
     // 进行任务可打印性过滤
     [self printFilesFilter:fileUrls completion:^(BOOL canprintAll) {
         // 任务都不可打印
         if (!canprintAll) {
             if (completionBlock) {
-                completionBlock(NO);
-                [self showHUDAutoHideWithtitle:HUDStatusTypeNoTaskToPrint];
+                completionBlock(nil, EFPrintStatusNoTaskToPrint, self.statusDict[@(EFPrintStatusNoTaskToPrint)]);
+                [self showHUDAutoHideWithtitle:EFPrintStatusNoTaskToPrint];
             }
             return;
         }
@@ -129,35 +112,39 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
         // 直接链接打印机打印
         UIPrinter *airPrinter = [UIPrinter printerWithURL:printerUrl];
         // 检查 printer 是否 online
-        [self showHUDWithTitle:HUDStatusTypeContactPrinter];
+        [self showHUDWithTitle:EFPrintStatusContactPrinter];
         [airPrinter contactPrinter:^(BOOL available) { // 这个检测方法是异步的，最长耗时30s
             [self hideHUD];
             
             if (!available) {
-                // 打印机不在线，提示重新选择打印机，选择打印机后会直接打印该任务
+                // 打印机 offline，提示重新选择打印机，选择打印机后会直接打印该任务
                 [self showPrinterOfflineAlertCompletionBlock:completionBlock];
                 return;
             }
             
-            [self showHUDAutoHideWithtitle:HUDStatusTypePrinting];
+            [self showHUDAutoHideWithtitle:EFPrintStatusPrinting];
             
             // 打印机 online
             [[UIPrintInteractionController sharedPrintController] printToPrinter:airPrinter completionHandler:^(UIPrintInteractionController * _Nonnull printInteractionController, BOOL completed, NSError * _Nullable error) {
+                // 打印机打印中途报错
                 if (error) {
                     if (completionBlock) {
-                        completionBlock(NO);
+                        completionBlock(nil, EFPrintStatusPrintFailure, error.localizedDescription);
                     }
                     return;
                 }
                 
+                // 打印流程完成，判断是否有完成打印操作
                 if (completed) {
-                    [self showHUDAutoHideWithtitle:HUDStatusTypePrintSuccess];
+                    [self showHUDAutoHideWithtitle:EFPrintStatusPrintSuccess];
+                    if (completionBlock) {
+                        completionBlock(nil, EFPrintStatusPrintSuccess, self.statusDict[@(EFPrintStatusPrintSuccess)]);
+                    }
                 } else {
-                    [self showHUDAutoHideWithtitle:HUDStatusTypePrintFailure];
-                }
-                
-                if (completionBlock) {
-                    completionBlock(completed);
+                    [self showHUDAutoHideWithtitle:EFPrintStatusPrintFailure];
+                    if (completionBlock) {
+                        completionBlock(nil, EFPrintStatusPrintFailure, self.statusDict[@(EFPrintStatusPrintFailure)]);
+                    }
                 }
                 NSLog(@"打印回调 - completed:%d, error: %@", completed, error);
                 
@@ -171,7 +158,7 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
 /// 检测任务url是否可打印
 - (void)printFilesFilter:(NSArray<NSString *> *)fileUrls completion:(void(^)(BOOL canprintAll))compeletionBlock {
     
-    [self showHUDWithTitle:HUDStatusTypeConnectFileUrl];
+    [self showHUDWithTitle:EFPrintStatusConnectFileUrl];
     
     // 没有文件打印
     if (!fileUrls.count) {
@@ -210,14 +197,15 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
 }
 
 /// 提示，重新选择打印机，选择后会立即打印任务
-- (void)showPrinterOfflineAlertCompletionBlock:(void(^)(BOOL completed))completionBlock {
+- (void)showPrinterOfflineAlertCompletionBlock:(CompletionBlock)completionBlock {
     
     UIAlertController *alertVc = [UIAlertController alertControllerWithTitle:@"打印机链接失败" message:@"是否重新选择打印机？" preferredStyle:UIAlertControllerStyleAlert];
     
     __weak typeof(self) weakSelf = self;
     [alertVc addAction:[UIAlertAction actionWithTitle:@"否" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        // 直接取消重新选择打印机
         if (completionBlock) {
-            completionBlock(NO);
+            completionBlock(nil, EFPrintStatusCancelReSelectPrinter, self.statusDict[@(EFPrintStatusCancelReSelectPrinter)]);
         }
         [weakSelf.topVC dismissViewControllerAnimated:YES completion:nil];
     }]];
@@ -227,11 +215,12 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
         [weakSelf selectPrinterCompletion:^(BOOL didSavePrinterUrl, NSString *printerURLStr) {
             if (didSavePrinterUrl) {
                 // 完成打印机选择后 立即进行打印
-                [weakSelf printFiles:weakSelf.fileUrls printerUrl:[NSURL URLWithString:printerURLStr] completionBlock:^(BOOL completed) {
-                    if (completionBlock) {
-                        completionBlock(completed);
-                    }
-                }];
+                [weakSelf printFiles:weakSelf.fileUrls printerUrl:[NSURL URLWithString:printerURLStr] completionBlock:completionBlock];
+            } else {
+                // 取消选择，（或没有打印机可选情况）
+                if (completionBlock) {
+                    completionBlock(nil, EFPrintStatusCancelReSelectPrinter, self.statusDict[@(EFPrintStatusCancelReSelectPrinter)]);
+                }
             }
         }];
         [alertVc dismissViewControllerAnimated:YES completion:nil];
@@ -241,12 +230,12 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
 }
 
 #pragma mark - HUD
-- (void)showHUDWithTitle:(HUDStatusType)hudStatusType {
+- (void)showHUDWithTitle:(EFPrintStatus)EFPrintStatus {
     MBProgressHUD *hud = [MBProgressHUD HUDForView:self.topVC.view];
     if (hud) {
         [hud hideAnimated:NO];
     }
-    NSString *title = self.statusDict[@(hudStatusType)];
+    NSString *title = self.statusDict[@(EFPrintStatus)];
     [MBProgressHUD showLoadToView:self.topVC.view
                   backgroundColor:[[UIColor blackColor] colorWithAlphaComponent:0.5]
                             title:title];
@@ -257,12 +246,12 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
     [MBProgressHUD hideHUDForView:self.topVC.view];
 }
 
-- (void)showHUDAutoHideWithtitle:(HUDStatusType)hudStatusType {
+- (void)showHUDAutoHideWithtitle:(EFPrintStatus)EFPrintStatus {
     MBProgressHUD *hud = [MBProgressHUD HUDForView:self.topVC.view];
     if (hud) {
         [hud hideAnimated:NO];
     }
-    NSString *title = self.statusDict[@(hudStatusType)];
+    NSString *title = self.statusDict[@(EFPrintStatus)];
     [MBProgressHUD showTitleToView:self.topVC.view postion:NHHUDPostionCenten title:title];
 }
 
@@ -280,13 +269,14 @@ typedef NS_ENUM(NSUInteger, HUDStatusType) {
 - (NSDictionary *)statusDict {
     if (!_statusDict) {
         _statusDict = @{
-                        @(HUDStatusTypePrintSuccess) : @"打印成功",
-                        @(HUDStatusTypePrintFailure) : @"打印失败",
-                        @(HUDStatusTypePrinterOffLine) : @"打印机离线，请重新选择打印机",
-                        @(HUDStatusTypePrinting) : @"正在打印中",
-                        @(HUDStatusTypeNoTaskToPrint) : @"任务不可打印",
-                        @(HUDStatusTypeContactPrinter) : @"正在链接打印机",
-                        @(HUDStatusTypeConnectFileUrl) : @"链接打印任务",
+                        @(EFPrintStatusPrintSuccess) : @"打印成功",
+                        @(EFPrintStatusPrintFailure) : @"打印失败",
+                        @(EFPrintStatusPrinterOffLine) : @"打印机离线，请重新选择打印机",
+                        @(EFPrintStatusPrinting) : @"正在打印中",
+                        @(EFPrintStatusNoTaskToPrint) : @"任务不可打印",
+                        @(EFPrintStatusContactPrinter) : @"正在连接打印机",
+                        @(EFPrintStatusConnectFileUrl) : @"连接打印任务",
+                        @(EFPrintStatusCancelReSelectPrinter) : @"取消选择打印机",
                         };
     }
     return _statusDict;

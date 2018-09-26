@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>电子表格打印</title>
+</head>
+
+<body>
+    <p style="text-align:center">电子表格打印</p>
+    <div>
+        打印张数
+        <input name="quantity" type="radio" value="1" checked="checked" />1
+        <input name="quantity" type="radio" value="2" />2
+    </div>
+    <br>
+    <div class="calldowload">
+        点击调用原生打印办法json类型
+    </div>
+    <div class="calldowload2">
+        点击调用原生打印办法json字符串类型
+    </div>
+    <div>
+        回调信息
+    </div>
+    <div class="calldata"></div>
+</body>
+<script>
+    // 样例
+    //https://icook-qa.amwaynet.com.cn/ir_resource/ir/doc/%E8%BD%AF%E9%80%9A%E5%8A%A8%E5%8A%9B%E7%88%B1%E5%BF%83%E4%BA%92%E5%8A%A9%E5%8A%A0%E5%85%A5%E7%94%B3%E8%AF%B7%E8%A1%A8.pdf
+    var param = { fileUrls: ["http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf"] }
+
+    var param2 = { fileUrls: ["http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf", "https://icook-qa.amwaynet.com.cn/ir_resource/ir/doc/%E8%BD%AF%E9%80%9A%E5%8A%A8%E5%8A%9B%E7%88%B1%E5%BF%83%E4%BA%92%E5%8A%A9%E5%8A%A0%E5%85%A5%E7%94%B3%E8%AF%B7%E8%A1%A8.pdf"] }
+    var JSONstring = {
+        parameter: JSON.stringify(param), //需要打印 pdf 的文件 url 数组
+        funcName: 'JSPrintRemotePdfs',
+        className: 'JSPrintPlugin',
+        callBack: 'JSPrintRemotePdfsCallBack'  //回调函数名字
+    }
+    document.querySelector('.calldowload').addEventListener('click', function () {
+        var quantity = document.getElementsByName('quantity');
+        var val = "";
+        for (var i = 0; i < quantity.length; i++) {
+            if (quantity[i].checked == true) {
+                val = quantity[i].value;
+                break;
+            }
+        }
+        if (val == 1) {
+            JSONstring.parameter = JSON.stringify(param)
+        }
+        if (val == 2) {
+            JSONstring.parameter = JSON.stringify(param2)
+        }
+        console.log(JSONstring)
+        window.webkit.messageHandlers.nativeInterface.postMessage(JSONstring);
+    }, false);
+    document.querySelector('.calldowload2').addEventListener('click', function () {
+        var quantity = document.getElementsByName('quantity');
+        var val = "";
+        for (var i = 0; i < quantity.length; i++) {
+            if (quantity[i].checked == true) {
+                val = quantity[i].value;
+                break;
+            }
+        }
+        if (val == 1) {
+            JSONstring.parameter = JSON.stringify(param)
+        }
+        if (val == 2) {
+            JSONstring.parameter = JSON.stringify(param2)
+        }
+        console.log(JSON.stringify(JSONstring))
+        window.webkit.messageHandlers.nativeInterface.postMessage(JSON.stringify(JSONstring));
+    }, false);
+    var JSPrintRemotePdfsCallBack = function (data) {
+        document.querySelector('.calldata').innerHTML = JSON.stringify(data)
+    }
+</script>
+
+</html>

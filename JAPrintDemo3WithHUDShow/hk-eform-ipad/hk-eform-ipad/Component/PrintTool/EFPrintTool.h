@@ -8,12 +8,25 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, EFPrintStatus) {
+    EFPrintStatusPrintSuccess = 200,
+    EFPrintStatusPrintFailure = 506,
+    EFPrintStatusPrinterOffLine,
+    EFPrintStatusPrinting,
+    EFPrintStatusNoTaskToPrint,
+    EFPrintStatusContactPrinter,
+    EFPrintStatusConnectFileUrl,
+    EFPrintStatusCancelReSelectPrinter,
+};
+
+typedef void(^CompletionBlock)(NSString *dataJSONStr, EFPrintStatus code, NSString *msg);
+
 @interface EFPrintTool : NSObject
 
 /// 选择打印机
 + (void)selectPrinter;
 
 /// 打印远程文件
-- (void)printFiles:(NSArray<NSString *> *)fileUrls compeletion:(void(^)(BOOL completed))completionBlock;
+- (void)printFiles:(NSArray<NSString *> *)fileUrls compeletion:(CompletionBlock)completionBlock;
 
 @end

@@ -28,29 +28,27 @@
     __weak typeof(self) weakSelf = self;
     
     EFPrintTool *printTool = [[EFPrintTool alloc] init];
-    [printTool printFiles:fileUrls compeletion:^(BOOL completed) {
-        [weakSelf didCompletedPrintOperation:completed];
+    [printTool printFiles:fileUrls compeletion:^(NSString *dataJSONStr, EFPrintStatus code, NSString *msg) {
+        // 完成打印后的回调
+
+        NSDictionary *resultDict = @{@"data":dataJSONStr.length ? dataJSONStr : @"",
+                                     @"code":@(code),
+                                     @"msg":msg.length ? msg : @""}; // 参考的Plugin这样写的，原因应该是保证后续接手人能够知道各个参数意义
+        
+        JSPluginResult *result = [JSPluginResult resultWithStatus:[weakSelf JSResultStatusFromCode:resultDict[@"code"]]
+                                                          jsonObj:resultDict[@"data"]
+                                                          message:resultDict[@"msg"]
+                                                       callBackID:weakSelf.command.callBackID];
+        [weakSelf.delegate sendPluginResult:result JSInvokedCommand:weakSelf.command];
+        
+        
     }];
     self.printTool = printTool;
     
 }
 
-// 完成打印后的回调
-- (void)didCompletedPrintOperation:(BOOL)completed {
-    NSDictionary *resultDict = nil;
-    if (completed) {
-        resultDict = @{@"data":@{},@"code":@200,@"msg":@"打印完成"}; // 参考的Plugin这样写的，原因应该是保证后续接手人能够知道各个参数意义
-    } else {
-        resultDict = @{@"data":@{},@"code":@506,@"msg":@"打印失败"};
-    }
-    JSPluginResult *result = [JSPluginResult resultWithStatus:[self JSResultStatusFromCode:resultDict[@"code"]]
-                                                      jsonObj:resultDict[@"data"]
-                                                      message:resultDict[@"msg"]
-                                                   callBackID:self.command.callBackID];
-    [self.delegate sendPluginResult:result JSInvokedCommand:self.command];
-}
-
 #pragma mark - 数值的 code 和 JSResultStatus 关联映射
+// JSResultStatus 用于通用组件的共用状态码，如需要其他状态码可以通过 plugin 类来组合定义，必须留下注释
 - (JSResultStatus)JSResultStatusFromCode:(NSNumber*)code {
     JSResultStatus resultStatus;
     NSNumber *number = code;

@@ -11,6 +11,7 @@
 		1622EE152151F2B900CC3E31 /* JSPrintPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 1622EE142151F2B900CC3E31 /* JSPrintPlugin.m */; };
 		16402CA12154969F007D8583 /* MBProgressHUD+NHAdd.m in Sources */ = {isa = PBXBuildFile; fileRef = 16402C9F2154969F007D8583 /* MBProgressHUD+NHAdd.m */; };
 		16402CA62159E710007D8583 /* EFPrintTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 16402CA52159E710007D8583 /* EFPrintTool.m */; };
+		16402CA8215B52BD007D8583 /* indexh5.html in Resources */ = {isa = PBXBuildFile; fileRef = 16402CA7215B52BC007D8583 /* indexh5.html */; };
 		16B7DD502150E3D1007A95FC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 16B7DD4F2150E3D1007A95FC /* AppDelegate.m */; };
 		16B7DD562150E3D1007A95FC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 16B7DD542150E3D1007A95FC /* Main.storyboard */; };
 		16B7DD582150E3D1007A95FC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16B7DD572150E3D1007A95FC /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 		16402CA02154969F007D8583 /* MBProgressHUD_NHExtend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD_NHExtend.h; sourceTree = "<group>"; };
 		16402CA42159E710007D8583 /* EFPrintTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EFPrintTool.h; sourceTree = "<group>"; };
 		16402CA52159E710007D8583 /* EFPrintTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EFPrintTool.m; sourceTree = "<group>"; };
+		16402CA7215B52BC007D8583 /* indexh5.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = indexh5.html; sourceTree = "<group>"; };
 		16B7DD4B2150E3D1007A95FC /* hk-eform-ipad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "hk-eform-ipad.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		16B7DD4E2150E3D1007A95FC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		16B7DD4F2150E3D1007A95FC /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			children = (
 				16402C9B21549671007D8583 /* Component */,
 				16B7DD802150F8FF007A95FC /* index.html */,
+				16402CA7215B52BC007D8583 /* indexh5.html */,
 				16B7DD4E2150E3D1007A95FC /* AppDelegate.h */,
 				16B7DD4F2150E3D1007A95FC /* AppDelegate.m */,
 				16B7DD642150E8D2007A95FC /* EFHomeController.h */,
@@ -271,6 +274,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16B7DD5B2150E3D1007A95FC /* LaunchScreen.storyboard in Resources */,
+				16402CA8215B52BD007D8583 /* indexh5.html in Resources */,
 				16B7DD812150F900007A95FC /* index.html in Resources */,
 				16B7DD582150E3D1007A95FC /* Assets.xcassets in Resources */,
 				16B7DD562150E3D1007A95FC /* Main.storyboard in Resources */,
