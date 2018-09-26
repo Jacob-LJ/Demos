@@ -9,6 +9,7 @@
 
 ---
 2018年09月22日
+
 23 [MBProgressHUD的封装](https://github.com/nenhall/NHHUDExtend)
 > 在 airprint demo 中使用了，demo 事例清晰
 
@@ -25,7 +26,7 @@
 > 还是屏幕宽高相对比较好判断
 
 19 [浏览器渲染性能分析总结](http://jinge.red/html/performance/rendering.html?hmsr=toutiao.io&utm_medium=toutiao.io&utm_source=toutiao.io)
->浏览器渲染性能分析总结
+> 浏览器渲染性能分析总结
 优化javascript的执行
 避免js执行时间太长
 用requestAnimationRequest来做视觉变化
@@ -80,8 +81,8 @@
 > 点击App图标后，iOS系统的桌面SpringBoard会先创建LaunchScreen，然后创建App对应的进程。那么可以这样认为：LaunchScreen的加载是不占用App进程自身感知到的启动时间的。LaunchScreen是SpringBoard为了用户体验，提前在进程启动之前展示给用户看的。其中内含逆向相关操作，可以作为逆向例子参考
 
 7 downloader下载器相关-github
->[MCDownloadManager](https://github.com/agelessman/MCDownloadManager)
->[HWIFileDownload](https://github.com/Heikowi/HWIFileDownload)
+> [MCDownloadManager](https://github.com/agelessman/MCDownloadManager)
+> [HWIFileDownload](https://github.com/Heikowi/HWIFileDownload)
 
 6 [Taro](https://taro.aotu.io/)
 > 多端统一开发框架 Taro 1.0 正式发布，全面支持小程序
