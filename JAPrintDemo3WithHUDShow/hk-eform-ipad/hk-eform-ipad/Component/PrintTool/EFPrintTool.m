@@ -44,6 +44,11 @@
             if (didSavePrinterUrl) {
                 // 完成打印机选择后进行打印
                 [weakSelf printFiles:fileUrls printerUrl:[NSURL URLWithString:printerURLStr] completionBlock:completionBlock];
+            } else {
+                // 用户取消选择，或所有打印机离线，木有可选情况，用户关闭打印机选择列表的界面
+                if (completionBlock) {
+                    completionBlock(nil, EFPrintStatusCancelReSelectPrinter, self.statusDict[@(EFPrintStatusCancelReSelectPrinter)]);
+                }
             }
         }];
     }
