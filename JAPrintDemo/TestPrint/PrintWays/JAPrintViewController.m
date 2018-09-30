@@ -6,6 +6,8 @@
 //  Copyright © 2018年 Jacob. All rights reserved.
 //
 
+
+/// 测试打印 UIview，因为-viewPrintFormatter 是 UIView 的分类方法
 #import "JAPrintViewController.h"
 
 @interface JAPrintViewController ()

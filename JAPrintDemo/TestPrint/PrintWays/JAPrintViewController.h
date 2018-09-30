@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+/// 测试打印 UIview，因为-viewPrintFormatter 是 UIView 的分类方法
+
 @interface JAPrintViewController : UIViewController
 
 @end
