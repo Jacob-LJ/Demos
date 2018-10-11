@@ -10,14 +10,16 @@ import UIKit // 不再使用@“”了
 
 @UIApplicationMain // 相当于 OC 的 mian.m 文件
 class AppDelegate: UIResponder, UIApplicationDelegate {// 一个类的定义，开始位置
+    // 类的继承和遵守协议的写法是一致的，像是多继承
     // 内部可以写实例方法,协议写法与集成的父类写法是一样的，形式上与类是一致了
     // 类定义 使用 class 声明
 
-    var window: UIWindow? //一个变量的定义，可选类型，可以能为空，自动生成的格式是:靠左，不是两边有空格形式
+    var window: UIWindow? //一个变量的定义，可选类型，可能为空，自动生成的格式是:靠左，然后空格
 
     // [Swift函数(Functions) - 简书](https://www.jianshu.com/p/25eb2e706936)
+    //
     /*
-     下划线，隐藏第一个调用是外部参数名参数
+     下划线，隐藏外部参数名
      func test(_ prarms1: Int, prarms2: Int) {
      }
      调用

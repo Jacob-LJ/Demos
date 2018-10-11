@@ -13,6 +13,8 @@
 		1656C60A215E129100422517 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1656C609215E129100422517 /* Assets.xcassets */; };
 		1656C60D215E129100422517 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1656C60B215E129100422517 /* LaunchScreen.storyboard */; };
 		16FCBA51215E2E8300131AD3 /* AppDelegate+rootWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCBA50215E2E8300131AD3 /* AppDelegate+rootWindow.swift */; };
+		16FCBB0E216B337200131AD3 /* UserDefaults+myCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCBB0D216B337200131AD3 /* UserDefaults+myCoin.swift */; };
+		16FCBB10216C9F4B00131AD3 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FCBB0F216C9F4B00131AD3 /* UserDefaults.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		1656C60C215E129100422517 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1656C60E215E129100422517 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16FCBA50215E2E8300131AD3 /* AppDelegate+rootWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppDelegate+rootWindow.swift"; sourceTree = "<group>"; };
+		16FCBB0D216B337200131AD3 /* UserDefaults+myCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+myCoin.swift"; sourceTree = "<group>"; };
+		16FCBB0F216C9F4B00131AD3 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,33 @@
 		1656C601215E129100422517 /* MyCoin-DuplicatePlate */ = {
 			isa = PBXGroup;
 			children = (
+				16FCBB0C216B334A00131AD3 /* Extensions */,
+				16FCBB0B216B330900131AD3 /* AppDelegates */,
 				1656C602215E129100422517 /* AppDelegate.swift */,
 				1656C604215E129100422517 /* ViewController.swift */,
 				1656C606215E129100422517 /* Main.storyboard */,
 				1656C609215E129100422517 /* Assets.xcassets */,
 				1656C60B215E129100422517 /* LaunchScreen.storyboard */,
 				1656C60E215E129100422517 /* Info.plist */,
-				16FCBA50215E2E8300131AD3 /* AppDelegate+rootWindow.swift */,
 			);
 			path = "MyCoin-DuplicatePlate";
+			sourceTree = "<group>";
+		};
+		16FCBB0B216B330900131AD3 /* AppDelegates */ = {
+			isa = PBXGroup;
+			children = (
+				16FCBA50215E2E8300131AD3 /* AppDelegate+rootWindow.swift */,
+			);
+			path = AppDelegates;
+			sourceTree = "<group>";
+		};
+		16FCBB0C216B334A00131AD3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				16FCBB0D216B337200131AD3 /* UserDefaults+myCoin.swift */,
+				16FCBB0F216C9F4B00131AD3 /* UserDefaults.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +162,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				16FCBA51215E2E8300131AD3 /* AppDelegate+rootWindow.swift in Sources */,
+				16FCBB10216C9F4B00131AD3 /* UserDefaults.swift in Sources */,
+				16FCBB0E216B337200131AD3 /* UserDefaults+myCoin.swift in Sources */,
 				1656C605215E129100422517 /* ViewController.swift in Sources */,
 				1656C603215E129100422517 /* AppDelegate.swift in Sources */,
 			);

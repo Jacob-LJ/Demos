@@ -14,6 +14,8 @@ extension AppDelegate {
     func setUpRootWindow() {
         window = UIWindow(frame: UIScreen.main.bounds)
         
+        let auth = UserDefaults.Settings.boolValue(.authentication)
+        
         
     }
 }
