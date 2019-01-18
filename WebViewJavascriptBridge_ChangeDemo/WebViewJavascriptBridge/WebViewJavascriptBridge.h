@@ -10,27 +10,27 @@
 #import "WebViewJavascriptBridgeBase.h"
 
 #if (__MAC_OS_X_VERSION_MAX_ALLOWED > __MAC_10_9 || __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_7_1)
-#define supportsWKWebView
+#define supportsWKWebView // 根据各个平台版本判断是否支持wkwebview
 #endif
 
 #if defined supportsWKWebView
 #import <WebKit/WebKit.h>
 #endif
 
-#if defined __MAC_OS_X_VERSION_MAX_ALLOWED
+#if defined __MAC_OS_X_VERSION_MAX_ALLOWED // 用于 macOS 中
     #define WVJB_PLATFORM_OSX
     #define WVJB_WEBVIEW_TYPE WebView
     #define WVJB_WEBVIEW_DELEGATE_TYPE NSObject<WebViewJavascriptBridgeBaseDelegate>
     #define WVJB_WEBVIEW_DELEGATE_INTERFACE NSObject<WebViewJavascriptBridgeBaseDelegate, WebPolicyDelegate>
-#elif defined __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined __IPHONE_OS_VERSION_MAX_ALLOWED // 用于 iPhone 中
     #import <UIKit/UIWebView.h>
-    #define WVJB_PLATFORM_IOS
-    #define WVJB_WEBVIEW_TYPE UIWebView
-    #define WVJB_WEBVIEW_DELEGATE_TYPE NSObject<UIWebViewDelegate>
-    #define WVJB_WEBVIEW_DELEGATE_INTERFACE NSObject<UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate>
+    #define WVJB_PLATFORM_IOS // 定义一个iOS平台标志
+    #define WVJB_WEBVIEW_TYPE UIWebView // webview类型是UIWebView
+    #define WVJB_WEBVIEW_DELEGATE_TYPE NSObject<UIWebViewDelegate> // 代理类型 UIWebViewDelegate
+    #define WVJB_WEBVIEW_DELEGATE_INTERFACE NSObject<UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate> // .h 文件继承和代理类型
 #endif
 
-@interface WebViewJavascriptBridge : WVJB_WEBVIEW_DELEGATE_INTERFACE
+@interface WebViewJavascriptBridge : WVJB_WEBVIEW_DELEGATE_INTERFACE // 等同于 NSObject<UIWebViewDelegate, WebViewJavascriptBridgeBaseDelegate> 
 
 
 + (instancetype)bridgeForWebView:(id)webView;

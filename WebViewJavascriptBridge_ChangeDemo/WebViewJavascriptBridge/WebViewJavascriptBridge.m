@@ -157,6 +157,7 @@
     _webView.delegate = nil;
 }
 
+// 下面4个方法是UIWebViewDelegate的方法声明，通过转发代理进行过滤操作
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     if (webView != _webView) { return; }
     
