@@ -72,6 +72,7 @@
     }
     //对传过来的BaseUrl进行处理，如果有值且最后不包含/，url加上"/"
     // Ensure terminal slash for baseURL path, so that NSURL +URLWithString:relativeToURL: works as expected
+    // [NSURL +URLWithString:relativeToURL](https://www.jianshu.com/p/68b6e0ceabc8)，baseURL没有以/结尾的情况列举
     if ([[url path] length] > 0 && ![[url absoluteString] hasSuffix:@"/"]) {
         url = [url URLByAppendingPathComponent:@""];
     }
@@ -279,6 +280,10 @@
     // 默认情况下，self.requestSerializer的类型是AFHTTPRequestSerializer，调用该类的requestWithMethod获得request。
     // 实际上self.requestSerializer还可能配置成AFHTTPRequestSerializer的其他子类型，如AFJSONRequestSerializer、AFPropertyListRequestSerializer
     NSMutableURLRequest *request = [self.requestSerializer requestWithMethod:method URLString:[[NSURL URLWithString:URLString relativeToURL:self.baseURL] absoluteString] parameters:parameters error:&serializationError];
+    
+    // 初始化时候，对self.baseURL进行了末尾斜杠/的添加处理，这样会是方法 NSURL +URLWithString:relativeToURL: 能够正确执行
+    // [NSURL +URLWithString:relativeToURL](https://www.jianshu.com/p/68b6e0ceabc8)，baseURL没有以/结尾的情况列举
+    
     if (serializationError) {
         if (failure) {
              //如果解析错误，直接返回，其中self.completionQueue是提供给外界的接口，可以指定队列执行回调函数，如果没指定就在主队列中回调
