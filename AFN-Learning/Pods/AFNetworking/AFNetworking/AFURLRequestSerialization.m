@@ -43,37 +43,69 @@ typedef NSString * (^AFQueryStringSerializationBlock)(NSURLRequest *request, id 
  should be percent-escaped in the query string.
     - parameter string: The string to be percent-escaped.
     - returns: The percent-escaped string.
+ 
+ 
+ 根据 RFC 3986 对query字符串的键或值进行百分比转义，并返回转移后字符串
+ RFC3986声明以下字符是“保留”字符。
+ -常规分隔符：“：”，“”，“[”，“]”，@“，？”，“/”
+ -子分隔符：“！”，“$”，“&”，“'”，“（”，“）”，“*”，“+”，“，”，“；”，“=”
+ 在RFC 3986第3.4节中，指出包含在URL的query stirng中的“？”和“/”字符不允许转义。
+ 因此，包含在query string中，除了“？”和“/”之外的所有“保留”字符都应进行百分比转义。
+ 
+ -参数字符串：要进行百分比转义的字符串。
+ -返回：转义字符串的百分比。
  */
 NSString * AFPercentEscapedStringFromString(NSString *string) {
     static NSString * const kAFCharactersGeneralDelimitersToEncode = @":#[]@"; // does not include "?" or "/" due to RFC 3986 - Section 3.4
     static NSString * const kAFCharactersSubDelimitersToEncode = @"!$&'()*+,;=";
 
+    // URLQueryAllowedCharacterSet 包括如下字符
+    // !$&'()*+,-./0123456789:;=?@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~
     NSMutableCharacterSet * allowedCharacterSet = [[NSCharacterSet URLQueryAllowedCharacterSet] mutableCopy];
+    
+    // 移除指定的符号后：
+    // -./0123456789?ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~
     [allowedCharacterSet removeCharactersInString:[kAFCharactersGeneralDelimitersToEncode stringByAppendingString:kAFCharactersSubDelimitersToEncode]];
+    
 
 	// FIXME: https://github.com/AFNetworking/AFNetworking/pull/3028
     // return [string stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet];
 
-    static NSUInteger const batchSize = 50;
+    static NSUInteger const batchSize = 50; // 为啥是50?
 
     NSUInteger index = 0;
     NSMutableString *escaped = @"".mutableCopy;
 
     while (index < string.length) {
         NSUInteger length = MIN(string.length - index, batchSize);
-        NSRange range = NSMakeRange(index, length);
+        NSRange range = NSMakeRange(index, length); // 生成length最大为50的range
 
         // To avoid breaking up character sequences such as 👴🏻👮🏽
-        range = [string rangeOfComposedCharacterSequencesForRange:range];
+        range = [string rangeOfComposedCharacterSequencesForRange:range]; // 生成一个防止截断字符串的range，假设string = 👴🏻👮🏽，string.length = 8，如果截取长度为5，则执行substringWithRange截取时就只会截取👴🏻，为防止此种情况，使用rangeOfComposedCharacterSequencesForRange方法后，range会从(0,5)变为(0,8),这样就能保证字符完整截取
+        
+        // 每一个中文或者英文在NSString中的length均为1，但是一个Emoji的length的长度为2或者4，如果使用substringToIndex可能存在把Emoji截断而导致乱码的情况，所以使用下面2个方法，避免截断完整字符
+        /*
+         - (NSRange)rangeOfComposedCharacterSequenceAtIndex:(NSUInteger)index //此方法用于当定位于字符串的index位置时，返回在此位置的字符完整的range
+         - (NSRange)rangeOfComposedCharacterSequencesForRange:(NSRange)range //此方法用于在字符串的一个range范围内，返回此range范围内完整的字符串的range
+         查看
+         */
 
-        NSString *substring = [string substringWithRange:range];
-        NSString *encoded = [substring stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet];
+        NSString *substring = [string substringWithRange:range]; // 使用新的能够完整截取字符的range进行字符串截取，截取长度最长50
+        NSString *encoded = [substring stringByAddingPercentEncodingWithAllowedCharacters:allowedCharacterSet];// 除了allowedCharacterSet(-./?_~[a-z][A-Z][0-9])里面的字符不用进行百分号编码外，字符串中的其他字符都进行百分号编码
         [escaped appendString:encoded];
 
         index += range.length;
     }
 
 	return escaped;
+    
+/*
+ YY的 NSString+YYAdd分类中的stringByURLEncode方法有采用上述编码方式，并且做了stringByAddingPercentEncodingWithAllowedCharacters的方法的向下扩展
+ 
+ URL encode a string in utf-8.
+ @return the encoded string.
+    - (NSString *)stringByURLEncode;
+ */
 }
 
 #pragma mark -

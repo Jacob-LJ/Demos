@@ -14,6 +14,7 @@
 		48670D3B21F1CAB900FB9793 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 48670D3A21F1CAB900FB9793 /* Assets.xcassets */; };
 		48670D3E21F1CAB900FB9793 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 48670D3C21F1CAB900FB9793 /* LaunchScreen.storyboard */; };
 		48670D4121F1CAB900FB9793 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 48670D4021F1CAB900FB9793 /* main.m */; };
+		48670D4921F5C82800FB9793 /* NSString+URL.m in Sources */ = {isa = PBXBuildFile; fileRef = 48670D4821F5C82800FB9793 /* NSString+URL.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,8 @@
 		48670D3D21F1CAB900FB9793 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		48670D3F21F1CAB900FB9793 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		48670D4021F1CAB900FB9793 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		48670D4721F5C82800FB9793 /* NSString+URL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+URL.h"; sourceTree = "<group>"; };
+		48670D4821F5C82800FB9793 /* NSString+URL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+URL.m"; sourceTree = "<group>"; };
 		4FF6EDD03B87548370972F20 /* Pods-AFN-Learning.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AFN-Learning.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AFN-Learning/Pods-AFN-Learning.debug.xcconfig"; sourceTree = "<group>"; };
 		B06D63D93FBF89BD8C778DD1 /* Pods-AFN-Learning.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AFN-Learning.release.xcconfig"; path = "Pods/Target Support Files/Pods-AFN-Learning/Pods-AFN-Learning.release.xcconfig"; sourceTree = "<group>"; };
 		E1A61231053D4124DDD34DB0 /* libPods-AFN-Learning.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AFN-Learning.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -73,6 +76,8 @@
 		48670D3021F1CAB800FB9793 /* AFN-Learning */ = {
 			isa = PBXGroup;
 			children = (
+				48670D4721F5C82800FB9793 /* NSString+URL.h */,
+				48670D4821F5C82800FB9793 /* NSString+URL.m */,
 				48670D3121F1CAB800FB9793 /* AppDelegate.h */,
 				48670D3221F1CAB800FB9793 /* AppDelegate.m */,
 				48670D3421F1CAB800FB9793 /* ViewController.h */,
@@ -189,6 +194,7 @@
 			files = (
 				48670D3621F1CAB800FB9793 /* ViewController.m in Sources */,
 				48670D4121F1CAB900FB9793 /* main.m in Sources */,
+				48670D4921F5C82800FB9793 /* NSString+URL.m in Sources */,
 				48670D3321F1CAB800FB9793 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

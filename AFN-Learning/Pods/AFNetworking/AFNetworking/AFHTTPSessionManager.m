@@ -265,7 +265,7 @@
 }
 
 
-// 1、NSMutableURLRequest *request，2、NSURLSessionDataTask *dataTask
+// 1、生成request，2、生成 dataTask
 - (NSURLSessionDataTask *)dataTaskWithHTTPMethod:(NSString *)method
                                        URLString:(NSString *)URLString
                                       parameters:(id)parameters
