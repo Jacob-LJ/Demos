@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param queryString 进行了百分号编码的URL QueryString
  @return 复原参数字典
  */
-+ (NSDictionary *)dictionaryWithQueryString:(NSString *)queryString
++ (NSDictionary *)dictionaryWithQueryString:(NSString *)queryString;
 
 @end
 
