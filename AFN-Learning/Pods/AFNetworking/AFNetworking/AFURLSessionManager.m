@@ -930,7 +930,9 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
     return [NSString stringWithFormat:@"<%@: %p, session: %@, operationQueue: %@>", NSStringFromClass([self class]), self, self.session, self.operationQueue];
 }
 
+// [instancesRespondToSelector 和 respondsToSelector 的对比](https://juejin.im/post/5a668111f265da3e53425372)
 - (BOOL)respondsToSelector:(SEL)selector {
+    // 复写了selector的方法，这几个方法是在本类有实现的，但是如果外面的Block没赋值的话，则返回NO，相当于没有实现！
     if (selector == @selector(URLSession:task:willPerformHTTPRedirection:newRequest:completionHandler:)) {
         return self.taskWillPerformHTTPRedirection != nil;
     } else if (selector == @selector(URLSession:dataTask:didReceiveResponse:completionHandler:)) {
@@ -948,50 +950,88 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
 }
 
 #pragma mark - NSURLSessionDelegate
-
+// 当前这个session已经失效时，该代理方法被调用。
+/*
+ 如果你调用NSURLSession的 -finishTasksAndInvalidate 函数使该session失效，
+ 那么session首先会先完成最后一个task，然后再调用下面这个代理方法，
+ 如果你调用NSURLSession -invalidateAndCancel 方法来使session失效，那么该session会立即调用下面的代理方法。
+ */
 - (void)URLSession:(NSURLSession *)session
 didBecomeInvalidWithError:(NSError *)error
 {
     if (self.sessionDidBecomeInvalid) {
         self.sessionDidBecomeInvalid(session, error);
     }
-
+    // AF暂时没使用下面这个通知做事情，外界可以监听该通知处理中断情况
     [[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDidInvalidateNotification object:session];
 }
 
+// 身份验证质询， https 认证
 - (void)URLSession:(NSURLSession *)session
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
  completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler
 {
+    //身份验证质询 处理类型为 默认
+    /*
+     NSURLSessionAuthChallengePerformDefaultHandling：默认方式处理
+     NSURLSessionAuthChallengeUseCredential：使用指定的证书
+     NSURLSessionAuthChallengeCancelAuthenticationChallenge：取消身份验证质询
+     */
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     __block NSURLCredential *credential = nil;
-
+    // sessionDidReceiveAuthenticationChallenge 是自定义方法，用来如何应对服务器端的认证身份验证质询
     if (self.sessionDidReceiveAuthenticationChallenge) {
         disposition = self.sessionDidReceiveAuthenticationChallenge(session, challenge, &credential);
     } else {
+        // 此处服务器要求客户端进行身份验证质询 方法是NSURLAuthenticationMethodServerTrust
+        // 也就是说服务器端需要客户端返回一个根据身份验证质询的保护空间提供的信任（即challenge.protectionSpace.serverTrust）产生的身份验证质询 证书。
+        
+        // 而这个证书就需要使用credentialForTrust:来创建一个NSURLCredential对象
         if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            // 基于客户端的安全策略来决定是否信任该服务器，不信任的话，也就没必要响应身份验证质询
             if ([self.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:challenge.protectionSpace.host]) {
+                // 创建身份验证质询 证书（注：身份验证质询 方式为UseCredential和PerformDefaultHandling都需要新建身份验证质询 证书）
                 credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+                // 确定身份验证质询 的方式
                 if (credential) {
+                    //证书身份验证质询
                     disposition = NSURLSessionAuthChallengeUseCredential;
                 } else {
+                     //默认身份验证质询   唯一区别，下面少了这一步！
                     disposition = NSURLSessionAuthChallengePerformDefaultHandling;
                 }
             } else {
+                //取消身份验证质询
                 disposition = NSURLSessionAuthChallengeCancelAuthenticationChallenge;
             }
         } else {
+            //默认身份验证质询 方式
             disposition = NSURLSessionAuthChallengePerformDefaultHandling;
         }
     }
-
+     //完成身份验证质询
     if (completionHandler) {
         completionHandler(disposition, credential);
     }
+    
+    /*
+     函数作用：
+     web服务器接收到客户端请求时，有时候需要先验证客户端是否为正常用户，再决定是够返回真实数据。这种情况称之为服务端要求客户端接收挑战（NSURLAuthenticationChallenge *challenge）。接收到挑战后，客户端要根据服务端传来的challenge来生成completionHandler所需的NSURLSessionAuthChallengeDisposition disposition和NSURLCredential *credential（disposition指定应对这个挑战的方法，而credential是客户端生成的挑战证书，注意只有challenge中认证方法为NSURLAuthenticationMethodServerTrust的时候，才需要生成挑战证书）。最后调用completionHandler回应服务器端的挑战。
+     
+     函数讨论：
+     该代理方法会在下面两种情况调用：
+     
+     1 当服务器端要求客户端提供证书时或者进行NTLM认证（Windows NT LAN Manager，微软提出的WindowsNT挑战/响应验证机制）时，此方法允许你的app提供正确的挑战证书。
+     2 当某个session使用SSL/TLS协议，第一次和服务器端建立连接的时候，服务器会发送给iOS客户端一个证书，此方法允许你的app验证服务期端的证书链（certificate keychain）
+     注：如果你没有实现该方法，该session会调用其NSURLSessionTaskDelegate的代理方法URLSession:task:didReceiveChallenge:completionHandler: 。
+     总结一下:
+     这个方法其实就是做https认证的。看看上面的注释，大概能看明白这个方法做认证的步骤，我们还是如果有自定义的做认证的Block，则调用我们自定义的，否则去执行默认的认证步骤，最后调用完成认证：
+     
+    */
 }
 
 #pragma mark - NSURLSessionTaskDelegate
-
+// 被服务器重定向的时候调用
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
 willPerformHTTPRedirection:(NSHTTPURLResponse *)response
@@ -999,16 +1039,56 @@ willPerformHTTPRedirection:(NSHTTPURLResponse *)response
  completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
     NSURLRequest *redirectRequest = request;
-
+    // step1. 看是否有对应的user block 有的话转发出去，通过这4个参数，返回一个NSURLRequest类型参数，request转发、网络重定向.
     if (self.taskWillPerformHTTPRedirection) {
+        //用自己自定义的一个重定向的block实现，返回一个新的request。
         redirectRequest = self.taskWillPerformHTTPRedirection(session, task, response, request);
     }
 
     if (completionHandler) {
+        // step2. 用request重新请求
         completionHandler(redirectRequest);
     }
+    
+    /*
+     一开始我以为这个方法是类似NSURLProtocol，可以在请求时自己主动的去重定向request，后来发现不是，这个方法是在服务器去重定向的时候，才会被调用。
+     当我们服务器重定向的时候，代理就被调用了，我们可以去重新定义这个重定向的request。
+     
+     需要注意的地方：
+     此方法只会在default session或者ephemeral session中调用，而在background session中，session task会自动重定向。
+     
+     这里指的模式是我们一开始Init的模式：
+         if (!configuration) {
+            configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+         }
+         self.sessionConfiguration = configuration;
+     
+     
+     
+     这个模式总共分为3种：
+     
+     对于NSURLSession对象的初始化需要使用NSURLSessionConfiguration，而NSURLSessionConfiguration有三个类工厂方法：
+     1 +defaultSessionConfiguration
+     返回一个标准的 configuration，这个配置实际上与 NSURLConnection 的网络堆栈（networking stack）是一样的，具有相同的共享 NSHTTPCookieStorage，共享 NSURLCache 和共享NSURLCredentialStorage。
+     
+     2 +ephemeralSessionConfiguration
+     返回一个预设配置，这个配置中不会对缓存，Cookie 和证书进行持久性的存储。这对于实现像秘密浏览这种功能来说是很理想的。
+     
+     3 +backgroundSessionConfiguration:(NSString *)identifier
+     它的独特之处在于，它会创建一个后台 session。后台 session 不同于常规的，普通的 session，它甚至可以在应用程序挂起，退出或者崩溃的情况下运行上传和下载任务。初始化时指定的标识符，被用于向任何可能在进程外恢复后台传输的守护进程（daemon）提供上下文。
+     */
 }
 
+// https认证
+/*
+ 前面也有一个https认证就是NSURLSessionDelegate的
+ - (void)URLSession:(NSURLSession *)session
+ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
+ completionHandler:(void (^)(NSURLSessionAuthChallengeDisposition disposition, NSURLCredential *credential))completionHandler方法
+ 它们功能一样，执行的内容也完全一样。
+ 区别在于这个是non-session-level级别的认证，而之前的是session-level级别的。
+ 相对于它，多了一个参数task,然后调用我们自定义的Block会多回传这个task作为参数，这样我们就可以根据每个task去自定义我们需要的https认证方式。
+ */
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
 didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
@@ -1037,12 +1117,13 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
     }
 }
 
+// 当一个session task需要发送一个新的request body stream到服务器端的时候，调用该代理方法。
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
  needNewBodyStream:(void (^)(NSInputStream *bodyStream))completionHandler
 {
     NSInputStream *inputStream = nil;
-
+    //有自定义的taskNeedNewBodyStream,用自定义的，不然用task里原始的stream
     if (self.taskNeedNewBodyStream) {
         inputStream = self.taskNeedNewBodyStream(session, task);
     } else if (task.originalRequest.HTTPBodyStream && [task.originalRequest.HTTPBodyStream conformsToProtocol:@protocol(NSCopying)]) {
@@ -1052,8 +1133,15 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
     if (completionHandler) {
         completionHandler(inputStream);
     }
+    /*
+     该代理方法会在下面两种情况被调用：
+     1 如果task是由uploadTaskWithStreamedRequest:创建的，那么提供初始的request body stream时候会调用该代理方法。
+     2 因为认证挑战或者其他可恢复的服务器错误，而导致需要客户端重新发送一个含有body stream的request，这时候会调用该代理。
+     */
 }
 
+
+//周期性地通知代理发送到服务器端数据的进度。
 - (void)URLSession:(NSURLSession *)session
               task:(NSURLSessionTask *)task
    didSendBodyData:(int64_t)bytesSent
@@ -1062,6 +1150,7 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
 {
 
     int64_t totalUnitCount = totalBytesExpectedToSend;
+    // 如果totalUnitCount获取失败，就使用HTTP header中的Content-Length作为totalUnitCount
     if(totalUnitCount == NSURLSessionTransferSizeUnknown) {
         NSString *contentLength = [task.originalRequest valueForHTTPHeaderField:@"Content-Length"];
         if(contentLength) {
@@ -1078,6 +1167,11 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
     if (self.taskDidSendBodyData) {
         self.taskDidSendBodyData(session, task, bytesSent, totalBytesSent, totalUnitCount);
     }
+    
+    /*
+     就是每次发送数据给服务器，会回调这个方法，通知已经发送了多少，总共要发送多少。
+     代理方法里也就是仅仅调用了我们自定义的Block而已。
+     */
 }
 
 - (void)URLSession:(NSURLSession *)session
@@ -1161,12 +1255,21 @@ didBecomeDownloadTask:(NSURLSessionDownloadTask *)downloadTask
 }
 
 #if !TARGET_OS_OSX
+// 当session中所有已经入队的消息被发送出去后，会调用该代理方法。
 - (void)URLSessionDidFinishEventsForBackgroundURLSession:(NSURLSession *)session {
     if (self.didFinishEventsForBackgroundURLSession) {
         dispatch_async(dispatch_get_main_queue(), ^{
             self.didFinishEventsForBackgroundURLSession(session);
         });
     }
+    
+    /*
+     官方文档翻译：
+     函数讨论：
+     1 在iOS中，当一个后台传输任务完成或者后台传输时需要证书，而此时你的app正在后台挂起，那么你的app在后台会自动重新启动运行，并且这个app的UIApplicationDelegate会发送一个application:handleEventsForBackgroundURLSession:completionHandler:消息。该消息包含了对应后台的session的identifier，而且这个消息会导致你的app启动。你的app随后应该先存储completion handler，然后再使用相同的identifier创建一个background configuration，并根据这个background configuration创建一个新的session。这个新创建的session会自动与后台任务重新关联在一起。
+     
+     2 当你的app获取了一个URLSessionDidFinishEventsForBackgroundURLSession:消息，这就意味着之前这个session中已经入队的所有消息都转发出去了，这时候再调用先前存取的completion handler是安全的，或者因为内部更新而导致调用completion handler也是安全的。
+     */
 }
 #endif
 

@@ -455,7 +455,7 @@ forHTTPHeaderField:(NSString *)field
         }
         // 因为request的创建时内部处理的，外界不能直接设置request，所以通过反射机制将外界对request的6个配置项通过AFHTTPRequestSerializer来间接z转存至request中
     }
-    //将传入的parameters进行编码，并添加到request中，下面调用的方法是AFURLRequestSerialization这个协议指定方法，这个协议是给特定序列话处理参数的对象使用的，不同的序列化请求参数对象自己实现不同的序列化参数方式。例如当前对象是AFHTTPRequestSerializer，还有其他为AFJSONRequestSerializer、AFPropertyListRequestSerializer
+    //将传入的parameters进行编码，并添加到request中，下面调用的方法是AFURLRequestSerialization这个协议指定方法，这个协议是给 特定序列化处理参数的对象 使用的，不同的序列化请求参数对象 自己实现不同的序列化参数方式。例如当前对象是AFHTTPRequestSerializer，还有其他为AFJSONRequestSerializer、AFPropertyListRequestSerializer
     mutableRequest = [[self requestBySerializingRequest:mutableRequest withParameters:parameters error:error] mutableCopy];
 
 	return mutableRequest;
