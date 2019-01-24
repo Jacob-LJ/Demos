@@ -194,7 +194,7 @@ typedef void (^AFURLSessionTaskCompletionHandler)(NSURLResponse *response, id re
 }
 
 #pragma mark - NSURLSessionTaskDelegate
-//AF实现的代理！被从urlsession那转发到这
+// 这里是被AFURLSessionManager中实现的NSUrlSession代理时，转发到这里。
 - (void)URLSession:(__unused NSURLSession *)session
               task:(NSURLSessionTask *)task
 didCompleteWithError:(NSError *)error
@@ -240,7 +240,7 @@ didCompleteWithError:(NSError *)error
         dispatch_async(url_session_manager_processing_queue(), ^{
             // 注意AF的优化的点，虽然代理回调是串行的。但是下面数据解析这种费时操作，确是用并行线程来做的。url_session_manager_processing_queue()是创建一个并行队列
             NSError *serializationError = nil;
-            //解析数据，根据我们一开始设置的responseSerializer来解析data。下面调用的方法, 一个协议方法responseObjectForResponse，各种类型的responseSerializer类，都是遵守这个协议方法，实现了一个把我们请求到的data转换为我们需要的类型的数据的方法。
+            //解析数据，根据我们一开始设置的responseSerializer来解析data。下面调用的方法responseObjectForResponse, 是一个协议方法，各种类型的responseSerializer类，都是遵守这个协议方法，实现了一个把我们请求到的data转换为我们需要的类型的数据的方法。
             responseObject = [manager.responseSerializer responseObjectForResponse:task.response data:data error:&serializationError];
             //如果是下载文件，那么responseObject为下载的路径
             if (self.downloadFileURL) {
@@ -256,7 +256,8 @@ didCompleteWithError:(NSError *)error
             }
             //回调结果
             /*
-             这边还做了一个判断，如果自定义了GCD完成组completionGroup和完成队列的话completionQueue，会在加入这个组和在队列中回调Block。否则默认的是AF的创建的组和主队列回调。AF没有用这个GCD组做任何处理，只是提供这个接口，让我们有需求的自行调用处理。如果有对多个任务完成度的监听，可以自行处理。
+             这边还做了一个判断，如果自定义了GCD完成组completionGroup和完成队列的话completionQueue，会在加入这个组和在队列中回调Block。否则默认的是AF的创建的组和主队列回调。
+             AF没有用这个GCD组做任何处理，只是提供这个接口，让我们有需求的自行调用处理。如果有对多个任务完成度的监听，可以自行处理。
              而队列的话，如果你不需要回调主线程，可以自己设置一个回调队列。
              */
             dispatch_group_async(manager.completionGroup ?: url_session_manager_completion_group(), manager.completionQueue ?: dispatch_get_main_queue(), ^{
@@ -272,15 +273,16 @@ didCompleteWithError:(NSError *)error
         });
     }
     /*
-     这个方法是NSUrlSession任务完成的代理方法中，主动调用过来的。
-     生成了一个存储这个task相关信息的字典：userInfo，这个字典是用来作为发送任务完成的通知的参数。
-     判断了参数error的值，来区分请求成功还是失败。
-     如果成功则在一个AF的并行queue中，去做数据解析等后续操作：
+     这个方法是NSUrlSession任务完成的代理方法中，主动调用过来的。主要如下操作：
+     1、生成了一个存储这个task相关信息的字典：userInfo，这个字典是用来作为发送任务完成的通知的参数。
+     2、判断了参数error的值，来区分请求成功还是失败。
+     3、如果成功则在一个AF的并行queue中，去做数据解析等后续操作：
      */
 }
 
 #pragma mark - NSURLSessionDataDelegate
-
+// 这里是被AFURLSessionManager中实现的NSUrlSession代理时，转发到这里。
+// 原方法作用是：当我们获取到数据就会调用，会被反复调用，请求到的数据就在这被拼装完整
 - (void)URLSession:(__unused NSURLSession *)session
           dataTask:(__unused NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data
@@ -291,6 +293,9 @@ didCompleteWithError:(NSError *)error
     [self.mutableData appendData:data];
 }
 
+#pragma mark - NSURLSessionTaskDelegate
+// 这里是被AFURLSessionManager中实现的NSUrlSession代理时，转发到这里。
+//周期性地通知代理发送到服务器端数据的进度。
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
    didSendBodyData:(int64_t)bytesSent
     totalBytesSent:(int64_t)totalBytesSent
@@ -301,7 +306,14 @@ totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend{
 }
 
 #pragma mark - NSURLSessionDownloadDelegate
-
+// 这里是被AFURLSessionManager中实现的NSUrlSession代理时，转发到这里。
+/**
+ 周期性地通知下载进度调用
+ 
+ bytesWritten 表示自上次调用该方法后，接收到的数据字节数
+ totalBytesWritten表示目前已经接收到的数据字节数
+ totalBytesExpectedToWrite 表示期望收到的文件总字节数，是由Content-Length header提供。如果没有提供，默认是NSURLSessionTransferSizeUnknown。
+ */
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
       didWriteData:(int64_t)bytesWritten
  totalBytesWritten:(int64_t)totalBytesWritten
@@ -311,14 +323,35 @@ totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
     self.downloadProgress.completedUnitCount = totalBytesWritten;
 }
 
+// 这里是被AFURLSessionManager中实现的NSUrlSession代理时，转发到这里。
+//当下载被取消或者失败后重新恢复下载时调用
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask
  didResumeAtOffset:(int64_t)fileOffset
 expectedTotalBytes:(int64_t)expectedTotalBytes{
     
     self.downloadProgress.totalUnitCount = expectedTotalBytes;
     self.downloadProgress.completedUnitCount = fileOffset;
+    /*
+     原NSURLSessionDelegate方法
+     官方文档翻译：
+     
+     函数作用：
+     告诉代理，下载任务重新开始下载了。
+     
+     函数讨论：
+     如果一个正在下载任务被取消或者失败了，你可以请求一个resumeData对象（比如在userInfo字典中通过NSURLSessionDownloadTaskResumeData这个键来获取到resumeData）并使用它来提供足够的信息以重新开始下载任务。
+     随后，你可以使用resumeData作为downloadTaskWithResumeData:或downloadTaskWithResumeData:completionHandler:的参数。当你调用这些方法时，你将开始一个新的下载任务。一旦你继续下载任务，session会调用它的代理方法URLSession:downloadTask:didResumeAtOffset:expectedTotalBytes:其中的downloadTask参数表示的就是新的下载任务，这也意味着下载重新开始了。
+     
+     总结一下：
+     其实这个就是用来做断点续传的代理方法。可以在下载失败的时候，拿到我们失败的拼接的部分resumeData，然后用去调用downloadTaskWithResumeData：就会调用到这个代理方法来了。
+     其中注意：fileOffset这个参数，如果文件缓存策略或者最后文件更新日期阻止重用已经存在的文件内容，那么该值为0。否则，该值表示当前已经下载data的偏移量。
+     方法中仅仅调用了downloadTaskDidResume自定义Block。
+     
+     */
 }
 
+// 这里是被AFURLSessionManager中实现的NSUrlSession代理时，转发到这里。
+//下载完成的时候调用
 - (void)URLSession:(NSURLSession *)session
       downloadTask:(NSURLSessionDownloadTask *)downloadTask
 didFinishDownloadingToURL:(NSURL *)location
@@ -331,7 +364,7 @@ didFinishDownloadingToURL:(NSURL *)location
         if (self.downloadFileURL) {
             NSError *fileManagerError = nil;
 
-            //把下载路径移动到我们自定义的下载路径
+            //把下载文件移动到我们自定义的下载路径
             if (![[NSFileManager defaultManager] moveItemAtURL:location toURL:self.downloadFileURL error:&fileManagerError]) {
                 //错误发通知
                 [[NSNotificationCenter defaultCenter] postNotificationName:AFURLSessionDownloadTaskDidFailToMoveFileNotification object:downloadTask userInfo:fileManagerError.userInfo];
@@ -342,19 +375,42 @@ didFinishDownloadingToURL:(NSURL *)location
     /*
      下载成功了被NSUrlSession代理转发到这里，这里有个地方需要注意下：
      
-     之前的NSUrlSession代理和这里都移动了文件到下载路径，而NSUrlSession代理的下载路径是所有request公用的下载路径，一旦设置，所有的request都会下载到之前那个路径。
-     而这个是对应的每个task的，每个task可以设置各自下载路径,还记得AFHttpManager的download方法么
+     之前的AFURLSessionManager中实现的NSUrlSession代理，和从那转发至这里，无论是原方法还是转发给代理的这个方法，进行的都是移动文件到自定义下载路径，而NSUrlSession代理的下载路径是所有request公用的下载路径，一旦设置，所有的request都会下载到之前那个路径。
+     而这个是对应每个task的，每个task可以设置各自下载路径,还记得AFHttpManager的download方法么
      
      [manager downloadTaskWithRequest:resquest progress:nil destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
          return path;
      } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
      }];
+     这个地方return的path就是对应的这个代理方法里的path
      
-     这个地方return的path就是对应的这个代理方法里的path，我们调用最终会走到这么一个方法：
+     我们调用上面的[manager downloadTaskWithRequest:...]; 最终会走到这么一个方法：
      - (void)addDelegateForDownloadTask:(NSURLSessionDownloadTask *)downloadTask
                                progress:(void (^)(NSProgress *downloadProgress)) downloadProgressBlock
                             destination:(NSURL * (^)(NSURL *targetPath, NSURLResponse *response))destination
-                      completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler
+                      completionHandler:(void (^)(NSURLResponse *response, NSURL *filePath, NSError *error))completionHandler {
+     
+             AFURLSessionManagerTaskDelegate *delegate = [[AFURLSessionManagerTaskDelegate alloc] init];
+             delegate.manager = self;
+             delegate.completionHandler = completionHandler;
+     
+             //返回地址的Block
+             if (destination) {
+     
+                 //有点绕，就是把一个block赋值给我们代理的downloadTaskDidFinishDownloading，这个Block里的内部返回也是调用Block去获取到的，这里面的参数都是AF代理传过去的。
+                 delegate.downloadTaskDidFinishDownloading = ^NSURL * (NSURLSession * __unused session, NSURLSessionDownloadTask *task, NSURL *location) {
+                        //把Block返回的地址返回
+                         return destination(location, task.response);
+                };
+     
+             }
+     
+             downloadTask.taskDescription = self.taskDescriptionForSessionTasks;
+     
+             [self setDelegate:delegate forTask:downloadTask];
+     
+             delegate.downloadProgressBlock = downloadProgressBlock;
+     }
      
      清楚的可以看到地址被赋值给AF的Block了。
      
@@ -387,6 +443,7 @@ static inline BOOL af_addMethod(Class theClass, SEL selector, Method method) {
 static NSString * const AFNSURLSessionTaskDidResumeNotification  = @"com.alamofire.networking.nsurlsessiontask.resume";
 static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofire.networking.nsurlsessiontask.suspend";
 
+// 这个类大概的作用就是替换掉NSUrlSession中的resume和suspend方法。正常处理原有逻辑的同时，多发送一个通知
 @interface _AFURLSessionTaskSwizzling : NSObject
 
 @end
@@ -425,24 +482,60 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
             6) Grab a pointer for the super class to the current implementation of `resume`.
             7) If the current class implementation of `resume` is not equal to the super class implementation of `resume` AND the current implementation of `resume` is not equal to the original implementation of `af_resume`, THEN swizzle the methods
             8) Set the current class to the super class, and repeat steps 3-8
+         
+         译文：
+         
+         iOS 7和iOS 8在NSURLSessionTask实现上有些许不同，这使得下面的代码实现略显trick
+         关于这个问题，大家做了很多Unit Test，足以证明这个方法是可行的
+         目前我们所知的：
+         
+         NSURLSessionTasks是一组class的统称，如果你仅仅使用提供的API来获取NSURLSessionTask的class，并不一定返回的是你想要的那个（获取NSURLSessionTask的class目的是为了获取其resume方法）
+         简单地使用[NSURLSessionTask class]并不起作用。你需要新建一个NSURLSession，并根据创建的session再构建出一个NSURLSessionTask对象才行。
+         iOS 7上，localDataTask（下面代码构造出的NSURLSessionDataTask类型的变量，为了获取对应Class）的类型是 __NSCFLocalDataTask，__NSCFLocalDataTask继承自__NSCFLocalSessionTask，__NSCFLocalSessionTask继承自__NSCFURLSessionTask。
+         iOS 8上，localDataTask的类型为__NSCFLocalDataTask，__NSCFLocalDataTask继承自__NSCFLocalSessionTask，__NSCFLocalSessionTask继承自NSURLSessionTask
+         iOS 7上，__NSCFLocalSessionTask和__NSCFURLSessionTask是仅有的两个实现了resume和suspend方法的类，另外__NSCFLocalSessionTask中的resume和suspend并没有调用其父类（即__NSCFURLSessionTask）方法，这也意味着两个类的方法都需要进行method swizzling。
+         iOS 8上，NSURLSessionTask是唯一实现了resume和suspend方法的类。这也意味着其是唯一需要进行method swizzling的类
+         因为NSURLSessionTask并不是在每个iOS版本中都存在，所以把这些放在此处（即load函数中），比如给一个dummy class添加swizzled方法都会变得很方便，管理起来也方便。
+         
+         一些假设前提:
+         
+         目前iOS中resume和suspend的方法实现中并没有调用对应的父类方法。如果日后iOS改变了这种做法，我们还需要重新处理。
+         没有哪个后台task会重写resume和suspend函数
+         
+         其余的一部分翻译在注释中，对应那一行代码。大概总结下这个注释：
+         
+         其实这是被社区大量讨论的一个bug，之前AF因为这个替换方法，会导致偶发性的crash，如果不要这个swizzle则问题不会再出现，但是这样会导致AF中很多UIKit的扩展都不能正常使用。
+         
+         原来这是因为iOS7和iOS8的NSURLSessionTask的继承链不同导致的，而且在iOS7继承链中会有两个类都实现了resume和suspend方法。而且子类没有调用父类的方法，我们则需要对着两个类都进行方法替换。而iOS8只需要对一个类进行替换。
+         对着注释看，上述方法代码不难理解，用一个while循环，一级一级去获取父类，如果实现了resume方法，则进行替换。
+         
          */
+        
+        // 1) 首先构建一个NSURLSession对象session，再通过session构建出一个_NSCFLocalDataTask变量
         NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
         NSURLSession * session = [NSURLSession sessionWithConfiguration:configuration];
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wnonnull"
         NSURLSessionDataTask *localDataTask = [session dataTaskWithURL:nil];
 #pragma clang diagnostic pop
+        // 2) 获取到af_resume实现的指针
         IMP originalAFResumeIMP = method_getImplementation(class_getInstanceMethod([self class], @selector(af_resume)));
         Class currentClass = [localDataTask class];
-        
+        // 3) 检查当前class是否实现了resume。如果实现了，继续第4步。
         while (class_getInstanceMethod(currentClass, @selector(resume))) {
+            // 4) 获取到当前class的父类（superClass）
             Class superClass = [currentClass superclass];
+            // 5) 获取到当前class对于resume实现的指针
             IMP classResumeIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(resume)));
+            //  6) 获取到父类对于resume实现的指针
             IMP superclassResumeIMP = method_getImplementation(class_getInstanceMethod(superClass, @selector(resume)));
+            // 7) 如果当前class对于resume的实现和父类不一样（类似iOS7上的情况），并且当前class的resume实现和af_resume不一样，才进行method swizzling。
             if (classResumeIMP != superclassResumeIMP &&
                 originalAFResumeIMP != classResumeIMP) {
+                 //执行交换的函数
                 [self swizzleResumeAndSuspendMethodForClass:currentClass];
             }
+            // 8) 设置当前操作的class为其父类class，重复步骤3~8
             currentClass = [currentClass superclass];
         }
         
@@ -469,6 +562,7 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
     return NSURLSessionTaskStateCanceling;
 }
 
+//被替换掉的方法，只要有TASK开启或者暂停，都会执行
 - (void)af_resume {
     NSAssert([self respondsToSelector:@selector(state)], @"Does not respond to state");
     NSURLSessionTaskState state = [self state];
@@ -640,7 +734,7 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
     // AFURLSessionManagerTaskDelegate 与 AFURLSessionManager 建立相互关系
     // 在创建delegate的initWithTask方法中，会对delegate中的_uploadProgress和_downloadProgress属性进行KVO监听
     AFURLSessionManagerTaskDelegate *delegate = [[AFURLSessionManagerTaskDelegate alloc] initWithTask:dataTask];
-    delegate.manager = self;
+    delegate.manager = self; // weak 关联防止循环引用
     delegate.completionHandler = completionHandler;
     
     //这个taskDescriptionForSessionTasks用来发送开始和挂起通知的时候会用到,就是用这个值来Post通知，来两者对应
@@ -1405,7 +1499,7 @@ didFinishDownloadingToURL:(NSURL *)location
             return;
         }
     }
-    //转发代理
+    //转发代理，如果自己定义downloadTaskDidFinishDownloading，则交给代理处理
     if (delegate) {
         [delegate URLSession:session downloadTask:downloadTask didFinishDownloadingToURL:location];
     }
