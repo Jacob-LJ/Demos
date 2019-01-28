@@ -22,16 +22,22 @@
 #import <Foundation/Foundation.h>
 #import <Security/Security.h>
 
+//https验证模式
 typedef NS_ENUM(NSUInteger, AFSSLPinningMode) {
+    //不验证
     AFSSLPinningModeNone,
+    //只验证公钥
     AFSSLPinningModePublicKey,
+    //验证证书
     AFSSLPinningModeCertificate,
 };
 
 /**
  `AFSecurityPolicy` evaluates server trust against pinned X.509 certificates and public keys over secure connections.
-
+`afsecuritypolicy`根据安全连接上的固定X.509证书和公钥评估服务器信任。
+ 
  Adding pinned SSL certificates to your app helps prevent man-in-the-middle attacks and other vulnerabilities. Applications dealing with sensitive customer data or financial information are strongly encouraged to route all communication over an HTTPS connection with SSL pinning configured and enabled.
+ 向应用程序添加固定的SSL证书有助于防止中间人攻击和其他漏洞。强烈建议处理敏感客户数据或财务信息的应用程序通过配置和启用SSL固定的HTTPS连接路由所有通信。
  */
 
 NS_ASSUME_NONNULL_BEGIN
@@ -40,7 +46,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  The criteria by which server trust should be evaluated against the pinned SSL certificates. Defaults to `AFSSLPinningModeNone`.
+ 根据固定的SSL证书评估服务器信任的条件
  */
+//https验证模式
 @property (readonly, nonatomic, assign) AFSSLPinningMode SSLPinningMode;
 
 /**
@@ -50,16 +58,19 @@ NS_ASSUME_NONNULL_BEGIN
  
  Note that if pinning is enabled, `evaluateServerTrust:forDomain:` will return true if any pinned certificate matches.
  */
+//可以去匹配服务端证书验证的证书
 @property (nonatomic, strong, nullable) NSSet <NSData *> *pinnedCertificates;
 
 /**
  Whether or not to trust servers with an invalid or expired SSL certificates. Defaults to `NO`.
  */
+//是否支持非法（无效或过期）的证书（例如自签名证书）默认NO
 @property (nonatomic, assign) BOOL allowInvalidCertificates;
 
 /**
  Whether or not to validate the domain name in the certificate's CN field. Defaults to `YES`.
  */
+//是否去验证证书域名是否匹配
 @property (nonatomic, assign) BOOL validatesDomainName;
 
 ///-----------------------------------------
@@ -120,7 +131,11 @@ NS_ASSUME_NONNULL_BEGIN
  @param domain The domain of serverTrust. If `nil`, the domain will not be validated.
 
  @return Whether or not to trust the server.
+ 
+(SecTrustRef)serverTrust 是用于执行X.509证书信任评估，再讲简单点，其实就是一个容器，装了服务器端需要验证的证书的基本信息、公钥等等，不仅如此，它还可以装一些评估策略，还有客户端的锚点证书，这个客户端的证书，可以用来和服务端的证书去匹配验证的。
+ 
  */
+// 验证服务端是否值得信任
 - (BOOL)evaluateServerTrust:(SecTrustRef)serverTrust
                   forDomain:(nullable NSString *)domain;
 

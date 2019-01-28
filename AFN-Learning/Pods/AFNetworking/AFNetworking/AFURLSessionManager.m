@@ -636,7 +636,7 @@ static NSString * const AFNSURLSessionTaskDidSuspendNotification = @"com.alamofi
 
     self.responseSerializer = [AFJSONResponseSerializer serializer];//各种响应转码
 
-    self.securityPolicy = [AFSecurityPolicy defaultPolicy];//设置默认安全策略
+    self.securityPolicy = [AFSecurityPolicy defaultPolicy];//设置默认安全策略,该策略不允许无效的证书，会验证域名，但不针对固定的证书或公钥进行验证。
 
 #if !TARGET_OS_WATCH
     self.reachabilityManager = [AFNetworkReachabilityManager sharedManager];
@@ -1110,13 +1110,13 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
 {
     //身份验证质询 处理类型为 默认
     /*
-     NSURLSessionAuthChallengePerformDefaultHandling：默认方式处理
+     NSURLSessionAuthChallengePerformDefaultHandling：默认方式
      NSURLSessionAuthChallengeUseCredential：使用指定的证书
      NSURLSessionAuthChallengeCancelAuthenticationChallenge：取消身份验证质询
      */
     NSURLSessionAuthChallengeDisposition disposition = NSURLSessionAuthChallengePerformDefaultHandling;
     __block NSURLCredential *credential = nil;
-    // sessionDidReceiveAuthenticationChallenge 是自定义方法，用来如何应对服务器端的认证身份验证质询
+    // sessionDidReceiveAuthenticationChallenge 是自定义方法，用来如何应对服务器端的身份验证质询认证
     if (self.sessionDidReceiveAuthenticationChallenge) {
         disposition = self.sessionDidReceiveAuthenticationChallenge(session, challenge, &credential);
     } else {
@@ -1125,10 +1125,13 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
         
         // 而这个证书就需要使用credentialForTrust:来创建一个NSURLCredential对象
         if ([challenge.protectionSpace.authenticationMethod isEqualToString:NSURLAuthenticationMethodServerTrust]) {
+            // 判断如果服务端的认证方法要求是NSURLAuthenticationMethodServerTrust,只需要验证服务端证书是否安全（即https的单向认证，这是AF默认处理的认证方式，其他的认证方式，只能由我们自定义Block的实现）
             // 基于客户端的安全策略来决定是否信任该服务器，不信任的话，也就没必要响应身份验证质询
-            if ([self.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:challenge.protectionSpace.host]) {
-                // 创建身份验证质询 证书（注：身份验证质询 方式为UseCredential和PerformDefaultHandling都需要新建身份验证质询 证书）
-                credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
+            if ([self.securityPolicy evaluateServerTrust:challenge.protectionSpace.serverTrust forDomain:challenge.protectionSpace.host]) { // AF默认的处理是，如果这行返回NO、说明AF内部认证失败，则取消https认证，即取消请求。
+                
+                // 创建身份验证质询 证书（注：身份验证质询 方式为UseCredential和PerformDefaultHandling都需要新建身份验证质询凭证）
+                credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust]; // 这个serverTrust是服务器传过来的，里面包含了服务器的证书信息，是用来给我们本地客户端去验证该证书是否合法用的）然后如果有证书，则用证书认证方式，否则还是用默认的验证方式。最后调用completionHandler传递认证方式和要认证的证书，去做系统根证书验证。
+                
                 // 确定身份验证质询 的方式
                 if (credential) {
                     //证书身份验证质询
@@ -1151,9 +1154,11 @@ didReceiveChallenge:(NSURLAuthenticationChallenge *)challenge
         completionHandler(disposition, credential);
     }
     
+    // 这里securityPolicy存在的作用就是，使得在系统底层自己去验证之前，AF可以先去验证服务端的证书。如果通不过，则直接越过系统的验证，取消https的网络请求。否则，继续去走系统根证书的验证。
+    
     /*
      函数作用：
-     web服务器接收到客户端请求时，有时候需要先验证客户端是否为正常用户，再决定是够返回真实数据。这种情况称之为服务端要求客户端接收挑战（NSURLAuthenticationChallenge *challenge）。接收到挑战后，客户端要根据服务端传来的challenge来生成completionHandler所需的NSURLSessionAuthChallengeDisposition disposition和NSURLCredential *credential（disposition指定应对这个挑战的方法，而credential是客户端生成的挑战证书，注意只有challenge中认证方法为NSURLAuthenticationMethodServerTrust的时候，才需要生成挑战证书）。最后调用completionHandler回应服务器端的挑战。
+     web服务器接收到客户端请求时，有时候需要先验证客户端是否为正常用户，再决定是够返回真实数据。这种情况称之为服务端要求客户端接收挑战（NSURLAuthenticationChallenge *challenge）。接收到challenge后，客户端要根据服务端传来的challenge来生成completionHandler所需的NSURLSessionAuthChallengeDisposition disposition和NSURLCredential *credential（disposition指定应对这个challenge的方法，而credential是客户端生成的challenge凭证，注意只有challenge中认证方法为NSURLAuthenticationMethodServerTrust的时候，才需要生成挑战证书）。最后调用completionHandler回应服务器端的挑战。
      
      函数讨论：
      该代理方法会在下面两种情况调用：
