@@ -62,7 +62,9 @@ NS_EXTENSION_UNAVAILABLE_IOS("Use view controller based solutions where appropri
  Apple's HIG describes the following:
 
  > Display the network activity indicator to provide feedback when your app accesses the network for more than a couple of seconds. If the operation finishes sooner than that, you don’t have to show the network activity indicator, because the indicator is likely to disappear before users notice its presence.
-
+ 示网络活动的最短持续时间的时间间隔，该时间间隔应在活动指示器显示之前发生。默认值1秒。如果网络活动发生时应立即显示网络活动指示器，则该值应设置为0秒。
+ 苹果的Hig描述如下：
+ >当您的应用程序访问网络超过几秒钟时，显示网络活动指示器以提供反馈。如果操作完成得更快，则不必显示网络活动指示器，因为该指示器可能在用户注意到其存在之前消失。
  */
 @property (nonatomic, assign) NSTimeInterval activationDelay;
 
@@ -92,6 +94,8 @@ NS_EXTENSION_UNAVAILABLE_IOS("Use view controller based solutions where appropri
 /**
  Set the a custom method to be executed when the network activity indicator manager should be hidden/shown. By default, this is null, and the UIApplication Network Activity Indicator will be managed automatically. If this block is set, it is the responsiblity of the caller to manager the network activity indicator going forward.
 
+ 设置网络活动指示器是否隐藏/显示的自定义方法。默认情况下，此值为空，网络活动指示器显示隐藏由uiapplication自动管理。如果设置了此块，则调用者应负责管理网络活动指示器。
+ 
  @param block A block to be executed when the network activity indicator status changes.
  */
 - (void)setNetworkingActivityActionWithBlock:(nullable void (^)(BOOL networkActivityIndicatorVisible))block;
