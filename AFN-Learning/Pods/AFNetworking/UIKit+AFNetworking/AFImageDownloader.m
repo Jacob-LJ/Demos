@@ -108,6 +108,8 @@
 
 @implementation AFImageDownloader
 
+//设置一个系统缓存，内存缓存为20M，磁盘缓存为150M，
+//这个是系统级别维护的缓存。
 + (NSURLCache *)defaultURLCache {
     
     // It's been discovered that a crash will occur on certain versions
@@ -118,11 +120,17 @@
     // When iOS 7 support is dropped, this should be modified to use
     // NSProcessInfo methods instead.
     if ([[[UIDevice currentDevice] systemVersion] compare:@"8.2" options:NSNumericSearch] == NSOrderedAscending) {
-        return [NSURLCache sharedURLCache];
+        return [NSURLCache sharedURLCache]; // 低于8.2版本的
     }
     return [[NSURLCache alloc] initWithMemoryCapacity:20 * 1024 * 1024
                                          diskCapacity:150 * 1024 * 1024
                                              diskPath:@"com.alamofire.imagedownloader"];
+    
+    /*
+     这里有两个cache
+     AFImageDownloader.imageCache（AFAutoPurgingImageCache） 和 configuration.URLCache（NSURLCache）。
+     AF自己控制的图片缓存用AFAutoPurgingImageCache，而NSURLRequest的缓存由它自己内部根据策略去控制，用的是NSURLCache，不归AF处理，只需在configuration中设置上即可。
+     */
 }
 
 + (NSURLSessionConfiguration *)defaultURLSessionConfiguration {
@@ -134,8 +142,11 @@
     configuration.HTTPShouldUsePipelining = NO;
 
     configuration.requestCachePolicy = NSURLRequestUseProtocolCachePolicy;
+    //是否允许蜂窝网络，手机网
     configuration.allowsCellularAccess = YES;
+    //默认超时
     configuration.timeoutIntervalForRequest = 60.0;
+    //设置的图片缓存对象
     configuration.URLCache = [AFImageDownloader defaultURLCache];
 
     return configuration;
@@ -162,23 +173,35 @@
                             imageCache:(id <AFImageRequestCache>)imageCache {
     if (self = [super init]) {
         self.sessionManager = sessionManager;
-
+        //定义下载任务的顺序，默认FIFO，先进先出-队列模式，还有后进先出-栈模式
         self.downloadPrioritizaton = downloadPrioritization;
+        //最大的下载数
         self.maximumActiveDownloads = maximumActiveDownloads;
+        //自定义的cache，图片管理的缓存 AFAutoPurgingImageCache
         self.imageCache = imageCache;
-
+        //队列中的任务，待执行的
         self.queuedMergedTasks = [[NSMutableArray alloc] init];
+        //合并的任务，所有任务的字典
         self.mergedTasks = [[NSMutableDictionary alloc] init];
+        //活跃的request数
         self.activeRequestCount = 0;
-
+        //用UUID来拼接名字
         NSString *name = [NSString stringWithFormat:@"com.alamofire.imagedownloader.synchronizationqueue-%@", [[NSUUID UUID] UUIDString]];
+        //创建一个串行的queue
         self.synchronizationQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_SERIAL);
 
         name = [NSString stringWithFormat:@"com.alamofire.imagedownloader.responsequeue-%@", [[NSUUID UUID] UUIDString]];
+        //创建并行queue
         self.responseQueue = dispatch_queue_create([name cStringUsingEncoding:NSASCIIStringEncoding], DISPATCH_QUEUE_CONCURRENT);
+        /*
+         需要注意的就是，这里创建了两个queue：一个串行的请求queue，和一个并行的响应queue。
+         1、这个串行queue,是用来做内部生成task等等一系列业务逻辑的。它保证了我们在这些逻辑处理中的线程安全问题
+         2、这个并行queue，被用来做网络请求完成的数据回调
+         */
     }
 
     return self;
+    
 }
 
 + (instancetype)defaultInstance {
@@ -200,10 +223,13 @@
                                                   withReceiptID:(nonnull NSUUID *)receiptID
                                                         success:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse  * _Nullable response, UIImage *responseObject))success
                                                         failure:(nullable void (^)(NSURLRequest *request, NSHTTPURLResponse * _Nullable response, NSError *error))failure {
+    //还是类似之前的，同步串行去做下载的事 生成一个task,这些事情都是在当前线程中串行同步做的，所以不用担心线程安全问题。
     __block NSURLSessionDataTask *task = nil;
     dispatch_sync(self.synchronizationQueue, ^{
+        //url字符串
         NSString *URLIdentifier = request.URL.absoluteString;
         if (URLIdentifier == nil) {
+            //错误返回，没Url
             if (failure) {
                 NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorBadURL userInfo:nil];
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -213,20 +239,28 @@
             return;
         }
 
+        //如果这个任务已经存在，则添加成功失败Block,然后直接返回，即一个url用一个request,可以响应好几个block
+        //从自己task字典中根据Url去取AFImageDownloaderMergedTask，里面有task id url等等信息
         // 1) Append the success and failure blocks to a pre-existing request if it already exists
         AFImageDownloaderMergedTask *existingMergedTask = self.mergedTasks[URLIdentifier];
         if (existingMergedTask != nil) {
+            //里面包含成功和失败Block和UUid
             AFImageDownloaderResponseHandler *handler = [[AFImageDownloaderResponseHandler alloc] initWithUUID:receiptID success:success failure:failure];
+             //添加handler
             [existingMergedTask addResponseHandler:handler];
+            //给task赋值
             task = existingMergedTask.task;
             return;
         }
-
+        
+        //根据request的缓存策略，加载缓存
         // 2) Attempt to load the image from the image cache if the cache policy allows it
         switch (request.cachePolicy) {
+            //这3种情况都会去加载缓存
             case NSURLRequestUseProtocolCachePolicy:
             case NSURLRequestReturnCacheDataElseLoad:
             case NSURLRequestReturnCacheDataDontLoad: {
+                //从cache (AFAutoPurgingImageCache)中根据request拿数据
                 UIImage *cachedImage = [self.imageCache imageforRequest:request withAdditionalIdentifier:nil];
                 if (cachedImage != nil) {
                     if (success) {
@@ -242,23 +276,31 @@
                 break;
         }
 
+        //走到这说明即没有请求中的request,也没有cache,开始请求
         // 3) Create the request and set up authentication, validation and response serialization
         NSUUID *mergedTaskIdentifier = [NSUUID UUID];
         NSURLSessionDataTask *createdTask;
         __weak __typeof__(self) weakSelf = self;
-
+        //用sessionManager的去请求，注意，只是创建task,还是挂起状态
         createdTask = [self.sessionManager
                        dataTaskWithRequest:request
                        uploadProgress:nil
                        downloadProgress:nil
                        completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                           //在responseQueue中回调数据,初始化为并行queue
                            dispatch_async(self.responseQueue, ^{
                                __strong __typeof__(weakSelf) strongSelf = weakSelf;
+                               //拿到当前的task
                                AFImageDownloaderMergedTask *mergedTask = strongSelf.mergedTasks[URLIdentifier];
+                               //如果之前的task数组中，有这个请求的任务task，则从数组中移除
                                if ([mergedTask.identifier isEqual:mergedTaskIdentifier]) {
+                                   //安全的移除，并返回当前被移除的AF task
                                    mergedTask = [strongSelf safelyRemoveMergedTaskWithURLIdentifier:URLIdentifier];
+                                   //请求错误
                                    if (error) {
+                                       //去遍历task所有响应的处理
                                        for (AFImageDownloaderResponseHandler *handler in mergedTask.responseHandlers) {
+                                           //主线程，调用失败的Block
                                            if (handler.failureBlock) {
                                                dispatch_async(dispatch_get_main_queue(), ^{
                                                    handler.failureBlock(request, (NSHTTPURLResponse*)response, error);
@@ -266,10 +308,12 @@
                                            }
                                        }
                                    } else {
+                                       //成功根据request,往cache里添加
                                        if ([strongSelf.imageCache shouldCacheImage:responseObject forRequest:request withAdditionalIdentifier:nil]) {
                                            [strongSelf.imageCache addImage:responseObject forRequest:request withAdditionalIdentifier:nil];
                                        }
 
+                                       //调用成功Block
                                        for (AFImageDownloaderResponseHandler *handler in mergedTask.responseHandlers) {
                                            if (handler.successBlock) {
                                                dispatch_async(dispatch_get_main_queue(), ^{
@@ -280,22 +324,28 @@
                                        
                                    }
                                }
+                               //减少活跃的任务数
                                [strongSelf safelyDecrementActiveTaskCount];
                                [strongSelf safelyStartNextTaskIfNecessary];
                            });
                        }];
 
+        //创建handler
         // 4) Store the response handler for use when the request completes
         AFImageDownloaderResponseHandler *handler = [[AFImageDownloaderResponseHandler alloc] initWithUUID:receiptID
                                                                                                    success:success
-                                                                                                   failure:failure];
+                                                                                                    failure:failure];
+        //创建task
         AFImageDownloaderMergedTask *mergedTask = [[AFImageDownloaderMergedTask alloc]
                                                    initWithURLIdentifier:URLIdentifier
                                                    identifier:mergedTaskIdentifier
                                                    task:createdTask];
+        //添加handler
         [mergedTask addResponseHandler:handler];
+        //往当前任务字典里添加任务
         self.mergedTasks[URLIdentifier] = mergedTask;
 
+        //如果小于，则开始任务下载resume
         // 5) Either start the request or enqueue it depending on the current active request count
         if ([self isActiveRequestCountBelowMaximumLimit]) {
             [self startMergedTask:mergedTask];
@@ -303,29 +353,37 @@
             [self enqueueMergedTask:mergedTask];
         }
 
+        //拿到最终生成的task
         task = mergedTask.task;
     });
     if (task) {
+        //创建一个AFImageDownloadReceipt并返回，里面就多一个receiptID。
         return [[AFImageDownloadReceipt alloc] initWithReceiptID:receiptID task:task];
     } else {
         return nil;
     }
 }
 
+//根据AFImageDownloadReceipt来取消任务，即对应一个响应回调。
 - (void)cancelTaskForImageDownloadReceipt:(AFImageDownloadReceipt *)imageDownloadReceipt {
     dispatch_sync(self.synchronizationQueue, ^{
+        //拿到url
         NSString *URLIdentifier = imageDownloadReceipt.task.originalRequest.URL.absoluteString;
+        //根据url拿到task
         AFImageDownloaderMergedTask *mergedTask = self.mergedTasks[URLIdentifier];
+        //快速遍历查找某个下标，如果返回YES，则index为当前下标
         NSUInteger index = [mergedTask.responseHandlers indexOfObjectPassingTest:^BOOL(AFImageDownloaderResponseHandler * _Nonnull handler, __unused NSUInteger idx, __unused BOOL * _Nonnull stop) {
             return handler.uuid == imageDownloadReceipt.receiptID;
         }];
 
         if (index != NSNotFound) {
+            //移除响应处理
             AFImageDownloaderResponseHandler *handler = mergedTask.responseHandlers[index];
             [mergedTask removeResponseHandler:handler];
             NSString *failureReason = [NSString stringWithFormat:@"ImageDownloader cancelled URL request: %@",imageDownloadReceipt.task.originalRequest.URL.absoluteString];
             NSDictionary *userInfo = @{NSLocalizedFailureReasonErrorKey:failureReason};
             NSError *error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorCancelled userInfo:userInfo];
+            //并调用失败block，原因为取消
             if (handler.failureBlock) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     handler.failureBlock(imageDownloadReceipt.task.originalRequest, nil, error);
@@ -333,6 +391,7 @@
             }
         }
 
+        //如果任务里的响应回调为空或者状态为挂起，则取消task,并且从字典中移除
         if (mergedTask.responseHandlers.count == 0 && mergedTask.task.state == NSURLSessionTaskStateSuspended) {
             [mergedTask.task cancel];
             [self removeMergedTaskWithURLIdentifier:URLIdentifier];
@@ -347,14 +406,14 @@
     });
     return mergedTask;
 }
-
+//移除task相关，用同步串行的形式，防止移除中出现重复移除一系列问题
 //This method should only be called from safely within the synchronizationQueue
 - (AFImageDownloaderMergedTask *)removeMergedTaskWithURLIdentifier:(NSString *)URLIdentifier {
     AFImageDownloaderMergedTask *mergedTask = self.mergedTasks[URLIdentifier];
     [self.mergedTasks removeObjectForKey:URLIdentifier];
     return mergedTask;
 }
-
+//减少活跃的任务数
 - (void)safelyDecrementActiveTaskCount {
     dispatch_sync(self.synchronizationQueue, ^{
         if (self.activeRequestCount > 0) {
@@ -362,12 +421,16 @@
         }
     });
 }
-
+//如果可以，则开启下一个任务
 - (void)safelyStartNextTaskIfNecessary {
+     //回到串行queue
     dispatch_sync(self.synchronizationQueue, ^{
+        //先判断并行数限制
         if ([self isActiveRequestCountBelowMaximumLimit]) {
             while (self.queuedMergedTasks.count > 0) {
+                //获取数组中第一个task
                 AFImageDownloaderMergedTask *mergedTask = [self dequeueMergedTask];
+                //如果状态是挂起状态
                 if (mergedTask.task.state == NSURLSessionTaskStateSuspended) {
                     [self startMergedTask:mergedTask];
                     break;
@@ -376,17 +439,21 @@
         }
     });
 }
-
+//开始下载
 - (void)startMergedTask:(AFImageDownloaderMergedTask *)mergedTask {
     [mergedTask.task resume];
+    //任务活跃数+1
     ++self.activeRequestCount;
 }
 
+//把任务先加到数组里
 - (void)enqueueMergedTask:(AFImageDownloaderMergedTask *)mergedTask {
     switch (self.downloadPrioritizaton) {
+        //先进先出
         case AFImageDownloadPrioritizationFIFO:
             [self.queuedMergedTasks addObject:mergedTask];
             break;
+        //后进先出
         case AFImageDownloadPrioritizationLIFO:
             [self.queuedMergedTasks insertObject:mergedTask atIndex:0];
             break;
